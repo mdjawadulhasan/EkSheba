@@ -19,6 +19,6 @@ namespace DAL.EF
         public string ACBalance { get; set; }
         public string ACstatus { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual UsersDetail UsersDetail { get; set; }
     }
 }

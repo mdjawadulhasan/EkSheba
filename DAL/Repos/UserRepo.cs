@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    class UserRepo : Repo, IRepo<User, int>
+    class UserRepo : Repo, IRepo<UsersDetail, int>
     {
-        public bool Add(User obj)
+        public bool Add(UsersDetail obj)
         {
-            db.Users.Add(obj);
+            db.UsersDetails.Add(obj);
             return db.SaveChanges() > 0;
         }
 
@@ -20,21 +20,21 @@ namespace DAL.Repos
         {
 
             var dbuser = Get(id);
-            db.Users.Remove(dbuser);
+            db.UsersDetails.Remove(dbuser);
             return db.SaveChanges() > 0;
         }
 
-        public List<User> Get()
+        public List<UsersDetail> Get()
         {
-            return db.Users.ToList();
+            return db.UsersDetails.ToList();
         }
 
-        public User Get(int id)
+        public UsersDetail Get(int id)
         {
-            return db.Users.Find(id);
+            return db.UsersDetails.Find(id);
         }
 
-        public bool Update(User obj)
+        public bool Update(UsersDetail obj)
         {
             var dbuser = Get(obj.Nid);
             db.Entry(dbuser).CurrentValues.SetValues(obj);

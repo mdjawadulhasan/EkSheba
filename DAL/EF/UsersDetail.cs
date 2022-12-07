@@ -12,10 +12,10 @@ namespace DAL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class UsersDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public UsersDetail()
         {
             this.Accounts = new HashSet<Account>();
             this.RechargeHistories = new HashSet<RechargeHistory>();

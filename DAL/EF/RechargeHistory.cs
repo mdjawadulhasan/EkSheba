@@ -19,6 +19,6 @@ namespace DAL.EF
         public string Amount { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual UsersDetail UsersDetail { get; set; }
     }
 }

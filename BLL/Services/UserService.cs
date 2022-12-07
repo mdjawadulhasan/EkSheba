@@ -12,41 +12,41 @@ namespace BLL.Services
 {
     public class UserService
     {
-        public static List<UserDTO> Get()
+        public static List<UsersDetailDTO> Get()
         {
 
             var data = DataAccessFactory.UserDataAccess().Get();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
             var mapper = new Mapper(config);
-            var users = mapper.Map<List<UserDTO>>(data);
+            var users = mapper.Map<List<UsersDetailDTO>>(data);
             return users;
         }
 
 
-        public static UserDTO Get(int id)
+        public static UsersDetailDTO Get(int id)
         {
             var data = DataAccessFactory.UserDataAccess().Get(id);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
             var mapper = new Mapper(config);
-            var user = mapper.Map<UserDTO>(data);
+            var user = mapper.Map<UsersDetailDTO>(data);
             return user;
         }
 
-        public static bool Add(UserDTO dto)
+        public static bool Add(UsersDetailDTO dto)
         {
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
             var mapper = new Mapper(config);
-            var data = mapper.Map<User>(dto);
+            var data = mapper.Map<UsersDetail>(dto);
             var result = DataAccessFactory.UserDataAccess().Add(data);
             return result;
         }
 
-        public static bool Update(UserDTO dto)
+        public static bool Update(UsersDetailDTO dto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
             var mapper = new Mapper(config);
-            var data = mapper.Map<User>(dto);
+            var data = mapper.Map<UsersDetail>(dto);
             var result = DataAccessFactory.UserDataAccess().Update(data);
             return result;
 

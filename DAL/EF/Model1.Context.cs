@@ -27,6 +27,6 @@ namespace DAL.EF
     
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<RechargeHistory> RechargeHistories { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UsersDetail> UsersDetails { get; set; }
     }
 }

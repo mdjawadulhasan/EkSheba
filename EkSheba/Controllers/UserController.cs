@@ -33,7 +33,7 @@ namespace EkSheba.Controllers
 
         [Route("api/users/add")]
         [HttpPost]
-        public HttpResponseMessage Post(UserDTO group)
+        public HttpResponseMessage Post(UsersDetailDTO group)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace EkSheba.Controllers
 
 
         [Route("api/user/delete/{id}")]
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
             var data = UserService.Delete(id);
@@ -64,7 +64,7 @@ namespace EkSheba.Controllers
 
         [Route("api/users/update")]
         [HttpPost]
-        public HttpResponseMessage Update(UserDTO user)
+        public HttpResponseMessage Update(UsersDetailDTO user)
         {
             if (ModelState.IsValid)
             {

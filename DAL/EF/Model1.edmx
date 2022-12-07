@@ -23,7 +23,7 @@
           <Property Name="Amount" Type="varchar" MaxLength="50" />
           <Property Name="Date" Type="date" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="UsersDetails">
           <Key>
             <PropertyRef Name="Nid" />
           </Key>
@@ -38,10 +38,10 @@
           <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="Accounts">
@@ -50,10 +50,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RechargeHistories_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
           <End Role="RechargeHistories" Type="Self.RechargeHistories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="RechargeHistories">
@@ -64,13 +64,13 @@
         <EntityContainer Name="EkShebaModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersDetails" EntityType="Self.UsersDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_Users" Association="Self.FK_RechargeHistories_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
         </EntityContainer>
@@ -87,7 +87,7 @@
           <Property Name="ACNid" Type="Int32" />
           <Property Name="ACBalance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ACstatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Accounts_Users" FromRole="Accounts" ToRole="Users" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_Accounts_Users" FromRole="Accounts" ToRole="UsersDetails" />
         </EntityType>
         <EntityType Name="RechargeHistory">
           <Key>
@@ -97,9 +97,9 @@
           <Property Name="RcgNID" Type="Int32" />
           <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="User" Relationship="Self.FK_RechargeHistories_Users" FromRole="RechargeHistories" ToRole="Users" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_RechargeHistories_Users" FromRole="RechargeHistories" ToRole="UsersDetails" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="UsersDetail">
           <Key>
             <PropertyRef Name="Nid" />
           </Key>
@@ -112,14 +112,14 @@
           <Property Name="FathersName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MotherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Users" FromRole="Users" ToRole="Accounts" />
-          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_Users" FromRole="Users" ToRole="RechargeHistories" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Users" FromRole="UsersDetails" ToRole="Accounts" />
+          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_Users" FromRole="UsersDetails" ToRole="RechargeHistories" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
           <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="Accounts">
@@ -128,10 +128,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RechargeHistories_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
           <End Role="RechargeHistories" Type="Self.RechargeHistory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="RechargeHistories">
@@ -142,13 +142,13 @@
         <EntityContainer Name="EkShebaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistory" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersDetails" EntityType="Self.UsersDetail" />
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_Users" Association="Self.FK_RechargeHistories_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
         </EntityContainer>
@@ -178,9 +178,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="EkShebaModel.User">
-              <MappingFragment StoreEntitySet="Users">
+          <EntitySetMapping Name="UsersDetails">
+            <EntityTypeMapping TypeName="EkShebaModel.UsersDetail">
+              <MappingFragment StoreEntitySet="UsersDetails">
                 <ScalarProperty Name="Nid" ColumnName="Nid" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Age" ColumnName="Age" />
