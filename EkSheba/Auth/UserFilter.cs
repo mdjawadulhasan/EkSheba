@@ -9,7 +9,7 @@ using System.Web.Http.Filters;
 
 namespace EkSheba.Auth
 {
-    public class AdminFilter: AuthorizationFilterAttribute
+    public class UserFilter : AuthorizationFilterAttribute
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
@@ -19,9 +19,9 @@ namespace EkSheba.Auth
                 actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "No token supplied");
 
             }
-            else if (!AuthService.IsTokenValid(token.ToString(), 1))
+            else if (!AuthService.IsTokenValid(token.ToString(), 2))
             {
-                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Failed");
+                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Supplied Token is invalid or expired");
             }
             base.OnAuthorization(actionContext);
         }

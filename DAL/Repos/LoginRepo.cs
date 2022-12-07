@@ -33,6 +33,11 @@ namespace DAL.Repos
             return db.Users.Find(id);
         }
 
+        public User Get(string uname)
+        {
+            return db.Users.FirstOrDefault(u => u.Uname.Equals(uname));
+        }
+
         public bool Update(User obj)
         {
             var dbuser = Get(obj.Id);

@@ -45,5 +45,10 @@ namespace DAL.Repos
             db.Entry(dbuser).CurrentValues.SetValues(obj);
             return db.SaveChanges() > 0;
         }
+
+        public UsersDetail Get(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

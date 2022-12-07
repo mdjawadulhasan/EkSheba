@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using EkSheba.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,7 @@ namespace EkSheba.Controllers
 
         }
 
-        
+        [AdminFilter]
         [Route("api/login/delete/{id}")]
         [HttpPost]
         public HttpResponseMessage Delete(int id)
@@ -62,7 +63,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [UserFilter]
         [Route("api/login/update")]
         [HttpPost]
         public HttpResponseMessage Update(LoginDTO user)

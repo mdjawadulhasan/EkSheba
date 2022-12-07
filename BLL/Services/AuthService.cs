@@ -42,15 +42,24 @@ namespace BLL.Services
         {
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
 
-            DateTime dt1 = (DateTime)tk.ExpirationTime;
-            DateTime crnt = DateTime.Now;
-
-            var username = tk.Username;
+            
 
 
-            if (tk != null && tk.ExpirationTime == null)
+            if (tk != null )
             {
-                return true;
+                DateTime dt1 = (DateTime)tk.ExpirationTime;
+                DateTime crnt = DateTime.Now;
+
+                var user = DataAccessFactory.LoginDataAccess().Get(tk.Username);
+                if (DateTime.Compare(crnt, dt1) < 0 && utype == user.Type)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             return false;
 
