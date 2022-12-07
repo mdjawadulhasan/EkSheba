@@ -15,7 +15,7 @@ namespace EkSheba.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var data = UserService.Get();
+            var data = UserDetailService.Get();
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
@@ -25,7 +25,7 @@ namespace EkSheba.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var data = UserService.Get(id);
+            var data = UserDetailService.Get(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
@@ -37,7 +37,7 @@ namespace EkSheba.Controllers
         {
             if (ModelState.IsValid)
             {
-                var resp = UserService.Add(group);
+                var resp = UserDetailService.Add(group);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
@@ -56,7 +56,7 @@ namespace EkSheba.Controllers
         [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
-            var data = UserService.Delete(id);
+            var data = UserDetailService.Delete(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
@@ -68,7 +68,7 @@ namespace EkSheba.Controllers
         {
             if (ModelState.IsValid)
             {
-                var resp = UserService.Update(user);
+                var resp = UserDetailService.Update(user);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });

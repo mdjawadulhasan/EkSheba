@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService
+    public class UserDetailService
     {
         public static List<UsersDetailDTO> Get()
         {
 
-            var data = DataAccessFactory.UserDataAccess().Get();
+            var data = DataAccessFactory.UserDetailDataAccess().Get();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
             var mapper = new Mapper(config);
             var users = mapper.Map<List<UsersDetailDTO>>(data);
@@ -25,7 +25,7 @@ namespace BLL.Services
 
         public static UsersDetailDTO Get(int id)
         {
-            var data = DataAccessFactory.UserDataAccess().Get(id);
+            var data = DataAccessFactory.UserDetailDataAccess().Get(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
             var mapper = new Mapper(config);
             var user = mapper.Map<UsersDetailDTO>(data);
@@ -38,7 +38,7 @@ namespace BLL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
             var mapper = new Mapper(config);
             var data = mapper.Map<UsersDetail>(dto);
-            var result = DataAccessFactory.UserDataAccess().Add(data);
+            var result = DataAccessFactory.UserDetailDataAccess().Add(data);
             return result;
         }
 
@@ -47,7 +47,7 @@ namespace BLL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
             var mapper = new Mapper(config);
             var data = mapper.Map<UsersDetail>(dto);
-            var result = DataAccessFactory.UserDataAccess().Update(data);
+            var result = DataAccessFactory.UserDetailDataAccess().Update(data);
             return result;
 
         }
@@ -55,7 +55,7 @@ namespace BLL.Services
         public static bool Delete(int id)
         {
 
-            var result = DataAccessFactory.UserDataAccess().Delete(id);
+            var result = DataAccessFactory.UserDetailDataAccess().Delete(id);
             return result;
 
         }
