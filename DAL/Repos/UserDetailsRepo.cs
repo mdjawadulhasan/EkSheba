@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    class UserDetailsRepo : Repo, IRepo<UsersDetail, int>,IAuth
+    class UserDetailsRepo : Repo, IRepo<UsersDetail, int>,IAuth,IURepo
     {
         public User Authenticate(string uname, string pass)
         {
@@ -49,6 +49,11 @@ namespace DAL.Repos
         public UsersDetail Get(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public UsersDetail GetNid(int id)
+        {
+            return db.UsersDetails.FirstOrDefault(t => t.FK_Uid==id);
         }
     }
 }

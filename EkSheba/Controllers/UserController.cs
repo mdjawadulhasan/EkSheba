@@ -29,11 +29,11 @@ namespace EkSheba.Controllers
 
         [Route("api/users/add")]
         [HttpPost]
-        public HttpResponseMessage Post(UsersDetailDTO group)
+        public HttpResponseMessage Post(UsersDetailDTO u)
         {
             if (ModelState.IsValid)
             {
-                var resp = UserDetailService.Add(group);
+                var resp = UserDetailService.Add(u);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
@@ -102,11 +102,18 @@ namespace EkSheba.Controllers
         [UserFilter]
         [Route("api/val")]
         [HttpGet]
-        public HttpResponseMessage val(HttpActionContext actionContext)
+        public HttpResponseMessage GetCurrentUser(HttpActionContext actionContext)
         {
-            var resp = actionContext.Request.Headers.Authorization;
+
+
+            var resp = Request.Headers.Authorization;
+            string token = resp.ToString();
+
+
+            var data = AuthService.GetCurrentUser(token);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
            
-            return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
         }
     }
 }

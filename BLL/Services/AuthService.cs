@@ -41,10 +41,6 @@ namespace BLL.Services
         public static bool IsTokenValid(string token,int utype)
         {
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
-
-            
-
-
             if (tk != null )
             {
                 DateTime dt1 = (DateTime)tk.ExpirationTime;
@@ -62,8 +58,19 @@ namespace BLL.Services
 
             }
             return false;
+        }
 
 
+        public static UsersDetailDTO GetCurrentUser(string token)
+        {
+           
+            var tk = DataAccessFactory.TokenDataAccess().Get(token);
+            var loginuser = DataAccessFactory.LoginDataAccess().Get(tk.Username);
+            var data = DataAccessFactory.UsersDataAccess().GetNid(loginuser.Id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
+            var mapper = new Mapper(config);
+            var user = mapper.Map<UsersDetailDTO>(data);
+            return user;
         }
     }
 }
