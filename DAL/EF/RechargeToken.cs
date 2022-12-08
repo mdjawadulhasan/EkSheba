@@ -12,15 +12,20 @@ namespace DAL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class RechargeHistory
+    public partial class RechargeToken
     {
-        public int Id { get; set; }
-        public int R_FK_Nid { get; set; }
-        public int R_FK_RTid { get; set; }
-        public int Amount { get; set; }
-        public System.DateTime Date { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RechargeToken()
+        {
+            this.RechargeHistories = new HashSet<RechargeHistory>();
+        }
     
-        public virtual UsersDetail UsersDetail { get; set; }
-        public virtual RechargeToken RechargeToken { get; set; }
+        public int Id { get; set; }
+        public string Token { get; set; }
+        public int Amount { get; set; }
+        public int Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RechargeHistory> RechargeHistories { get; set; }
     }
 }

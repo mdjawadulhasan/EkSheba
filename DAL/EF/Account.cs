@@ -14,10 +14,10 @@ namespace DAL.EF
     
     public partial class Account
     {
-        public int ACid { get; set; }
-        public Nullable<int> ACNid { get; set; }
-        public string ACBalance { get; set; }
-        public string ACstatus { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> A_FK_Nid { get; set; }
+        public Nullable<int> Balance { get; set; }
+        public Nullable<int> Status { get; set; }
     
         public virtual UsersDetail UsersDetail { get; set; }
     }

@@ -4,24 +4,34 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
-            <PropertyRef Name="ACid" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ACid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ACNid" Type="int" />
-          <Property Name="ACBalance" Type="varchar" MaxLength="50" />
-          <Property Name="ACstatus" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="A_FK_Nid" Type="int" />
+          <Property Name="Balance" Type="int" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="RechargeHistories">
           <Key>
-            <PropertyRef Name="RcgID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="RcgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RcgNID" Type="int" />
-          <Property Name="Amount" Type="varchar" MaxLength="50" />
-          <Property Name="Date" Type="date" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="R_FK_Nid" Type="int" Nullable="false" />
+          <Property Name="R_FK_RTid" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RechargeToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -55,6 +65,7 @@
           <Property Name="FathersName" Type="varchar" MaxLength="50" />
           <Property Name="MotherName" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="FK_Uid" Type="int" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
@@ -64,25 +75,50 @@
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="Accounts">
-              <PropertyRef Name="ACNid" />
+              <PropertyRef Name="A_FK_Nid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RechargeHistories_Users">
-          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+        <Association Name="FK_RechargeHistories_RechargeHistories">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="1" />
           <End Role="RechargeHistories" Type="Self.RechargeHistories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="RechargeHistories">
-              <PropertyRef Name="RcgNID" />
+              <PropertyRef Name="R_FK_Nid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RechargeHistories_RechargeToken">
+          <End Role="RechargeToken" Type="Self.RechargeToken" Multiplicity="1" />
+          <End Role="RechargeHistories" Type="Self.RechargeHistories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RechargeToken">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RechargeHistories">
+              <PropertyRef Name="R_FK_RTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersDetails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersDetails">
+              <PropertyRef Name="FK_Uid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EkShebaModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RechargeToken" EntityType="Self.RechargeToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersDetails" EntityType="Self.UsersDetails" Schema="dbo" store:Type="Tables" />
@@ -90,34 +126,75 @@
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
-          <AssociationSet Name="FK_RechargeHistories_Users" Association="Self.FK_RechargeHistories_Users">
+          <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
+          <AssociationSet Name="FK_RechargeHistories_RechargeToken" Association="Self.FK_RechargeHistories_RechargeToken">
+            <End Role="RechargeToken" EntitySet="RechargeToken" />
+            <End Role="RechargeHistories" EntitySet="RechargeHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EkShebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Account">
           <Key>
-            <PropertyRef Name="ACid" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ACid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ACNid" Type="Int32" />
-          <Property Name="ACBalance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ACstatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="A_FK_Nid" Type="Int32" />
+          <Property Name="Balance" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="UsersDetail" Relationship="Self.FK_Accounts_Users" FromRole="Accounts" ToRole="UsersDetails" />
         </EntityType>
         <EntityType Name="RechargeHistory">
           <Key>
-            <PropertyRef Name="RcgID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="RcgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RcgNID" Type="Int32" />
-          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_RechargeHistories_Users" FromRole="RechargeHistories" ToRole="UsersDetails" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="R_FK_Nid" Type="Int32" Nullable="false" />
+          <Property Name="R_FK_RTid" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="RechargeHistories" ToRole="UsersDetails" />
+          <NavigationProperty Name="RechargeToken" Relationship="Self.FK_RechargeHistories_RechargeToken" FromRole="RechargeHistories" ToRole="RechargeToken" />
+        </EntityType>
+        <EntityType Name="RechargeToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeToken" FromRole="RechargeToken" ToRole="RechargeHistories" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tkey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationTime" Type="DateTime" Precision="3" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Uname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UsersDetails" Relationship="Self.FK_UsersDetails_Users" FromRole="Users" ToRole="UsersDetails" />
         </EntityType>
         <EntityType Name="UsersDetail">
           <Key>
@@ -132,8 +209,10 @@
           <Property Name="FathersName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MotherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_Uid" Type="Int32" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Users" FromRole="UsersDetails" ToRole="Accounts" />
-          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_Users" FromRole="UsersDetails" ToRole="RechargeHistories" />
+          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="UsersDetails" ToRole="RechargeHistories" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersDetails_Users" FromRole="UsersDetails" ToRole="Users" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
           <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
@@ -143,56 +222,70 @@
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="Accounts">
-              <PropertyRef Name="ACNid" />
+              <PropertyRef Name="A_FK_Nid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RechargeHistories_Users">
-          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
+        <Association Name="FK_RechargeHistories_RechargeHistories">
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="1" />
           <End Role="RechargeHistories" Type="Self.RechargeHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UsersDetails">
               <PropertyRef Name="Nid" />
             </Principal>
             <Dependent Role="RechargeHistories">
-              <PropertyRef Name="RcgNID" />
+              <PropertyRef Name="R_FK_Nid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RechargeHistories_RechargeToken">
+          <End Role="RechargeToken" Type="Self.RechargeToken" Multiplicity="1" />
+          <End Role="RechargeHistories" Type="Self.RechargeHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RechargeToken">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RechargeHistories">
+              <PropertyRef Name="R_FK_RTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersDetails_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersDetails">
+              <PropertyRef Name="FK_Uid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EkShebaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistory" />
+          <EntitySet Name="RechargeTokens" EntityType="Self.RechargeToken" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
+          <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UsersDetails" EntityType="Self.UsersDetail" />
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
-          <AssociationSet Name="FK_RechargeHistories_Users" Association="Self.FK_RechargeHistories_Users">
+          <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
-          <EntitySet Name="Users" EntityType="EkShebaModel.User" />
-          <EntitySet Name="Tokens" EntityType="EkShebaModel.Token" />
+          <AssociationSet Name="FK_RechargeHistories_RechargeToken" Association="Self.FK_RechargeHistories_RechargeToken">
+            <End Role="RechargeToken" EntitySet="RechargeTokens" />
+            <End Role="RechargeHistories" EntitySet="RechargeHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="Int32" />
-          <Property Name="Uname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Token">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Tkey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreationTime" Type="DateTime" Precision="3" />
-          <Property Name="ExpirationTime" Type="DateTime" Precision="3" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -202,20 +295,52 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="EkShebaModel.Account">
               <MappingFragment StoreEntitySet="Accounts">
-                <ScalarProperty Name="ACid" ColumnName="ACid" />
-                <ScalarProperty Name="ACNid" ColumnName="ACNid" />
-                <ScalarProperty Name="ACBalance" ColumnName="ACBalance" />
-                <ScalarProperty Name="ACstatus" ColumnName="ACstatus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="A_FK_Nid" ColumnName="A_FK_Nid" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RechargeHistories">
             <EntityTypeMapping TypeName="EkShebaModel.RechargeHistory">
               <MappingFragment StoreEntitySet="RechargeHistories">
-                <ScalarProperty Name="RcgID" ColumnName="RcgID" />
-                <ScalarProperty Name="RcgNID" ColumnName="RcgNID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="R_FK_Nid" ColumnName="R_FK_Nid" />
+                <ScalarProperty Name="R_FK_RTid" ColumnName="R_FK_RTid" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RechargeTokens">
+            <EntityTypeMapping TypeName="EkShebaModel.RechargeToken">
+              <MappingFragment StoreEntitySet="RechargeToken">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="EkShebaModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tkey" ColumnName="Tkey" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="ExpirationTime" ColumnName="ExpirationTime" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EkShebaModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Uname" ColumnName="Uname" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -231,27 +356,7 @@
                 <ScalarProperty Name="FathersName" ColumnName="FathersName" />
                 <ScalarProperty Name="MotherName" ColumnName="MotherName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="EkShebaModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Uname" ColumnName="Uname" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tokens">
-            <EntityTypeMapping TypeName="EkShebaModel.Token">
-              <MappingFragment StoreEntitySet="Token">
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="ExpirationTime" ColumnName="ExpirationTime" />
-                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
-                <ScalarProperty Name="Tkey" ColumnName="Tkey" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FK_Uid" ColumnName="FK_Uid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

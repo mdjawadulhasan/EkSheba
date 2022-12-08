@@ -30,10 +30,12 @@ namespace DAL.EF
         public string FathersName { get; set; }
         public string MotherName { get; set; }
         public string Status { get; set; }
+        public Nullable<int> FK_Uid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RechargeHistory> RechargeHistories { get; set; }
+        public virtual User User { get; set; }
     }
 }
