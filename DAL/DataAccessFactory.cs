@@ -36,10 +36,12 @@ namespace DAL
         }
 
 
-        public static IRechargeToken RecharheTokenDataAccess()
+        public static IRepo<RechargeToken, int> RechargeTokenDataAccess()
         {
-            return new AccountRepo();
+            return new RechargeTokenRepo();
         }
+
+        
 
     }
 }

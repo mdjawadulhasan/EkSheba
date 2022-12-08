@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="DTOs\AccountDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
+    <Compile Include="DTOs\RechargeHistory.cs" />
     <Compile Include="DTOs\RechargeTokenDTO.cs" />
     <Compile Include="DTOs\TokenDTO.cs" />
     <Compile Include="DTOs\UsersDetailDTO.cs" />

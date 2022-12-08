@@ -19,7 +19,7 @@ namespace BLL.Services
                 rc.Amount = 200;
                 rc.Token = Guid.NewGuid().ToString();
                 rc.Status = 0;
-                result = DataAccessFactory.RecharheTokenDataAccess().AddRechargeToken(rc);
+                result = DataAccessFactory.RechargeTokenDataAccess().Add(rc);
 
             }
             return result;

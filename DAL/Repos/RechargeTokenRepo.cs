@@ -8,44 +8,41 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    class AccountRepo : Repo, IRepo<Account, int>
+    class RechargeTokenRepo : Repo, IRepo<RechargeToken, int>
     {
-        public bool Add(Account obj)
+        public bool Add(RechargeToken obj)
         {
-            db.Accounts.Add(obj);
+            db.RechargeTokens.Add(obj);
             return db.SaveChanges() > 0;
         }
 
         public bool Delete(int id)
         {
-            var acc = Get(id);
-            db.Accounts.Remove(acc);
+            var tk = Get(id);
+            db.RechargeTokens.Remove(tk);
             return db.SaveChanges() > 0;
         }
 
-        public List<Account> Get()
-        {
-            return db.Accounts.ToList();
-        }
-
-        public Account Get(int id)
-        {
-            return db.Accounts.Find(id);
-        }
-
-        public Account Get(string id)
+        public List<RechargeToken> Get()
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Account obj)
+        public RechargeToken Get(int id)
+        {
+            return db.RechargeTokens.Find(id);
+        }
+
+        public RechargeToken Get(string id)
+        {
+            return db.RechargeTokens.FirstOrDefault(t => t.Token.Equals(id));
+        }
+
+        public bool Update(RechargeToken obj)
         {
             var acc = Get(obj.Id);
             db.Entry(acc).CurrentValues.SetValues(obj);
             return db.SaveChanges() > 0;
         }
-
-
-        
     }
 }
