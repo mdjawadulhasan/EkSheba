@@ -99,21 +99,10 @@ namespace EkSheba.Controllers
 
         }
 
-        [UserFilter]
-        [Route("api/val")]
-        [HttpGet]
-        public HttpResponseMessage GetCurrentUser(HttpActionContext actionContext)
-        {
+        /*var resp = Request.Headers.Authorization;
+        string token = resp.ToString();
+        var data = AuthService.GetCurrentUser(token);*/ 
 
 
-            var resp = Request.Headers.Authorization;
-            string token = resp.ToString();
-
-
-            var data = AuthService.GetCurrentUser(token);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-
-           
-        }
     }
 }
