@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs
 {
-    public class RechargeHistory
+    public class RechargeHistoryDTO
     {
         public int Id { get; set; }
         public int R_FK_Nid { get; set; }

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BLL.DTOs;
+using DAL;
 using DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,20 @@ namespace BLL.Services
 
             }
             return result;
-
         }
+
+        public static int Recharge(RechargeTokenDTO dto)
+        {
+            var token = DataAccessFactory.RechargeTokenDataAccess().Get(dto.Token);
+            if (token.Status == 0)
+            {
+                token.Status = 1;
+                return token.Amount;
+               
+            }
+            return 0;
+        }
+
+
     }
 }

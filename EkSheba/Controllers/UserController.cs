@@ -1,17 +1,20 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using EkSheba.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 
 namespace EkSheba.Controllers
 {
     public class UserController : ApiController
     {
-       
+
 
 
         [Route("api/user/{id}")]
@@ -96,6 +99,14 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [UserFilter]
+        [Route("api/val")]
+        [HttpGet]
+        public HttpResponseMessage val(HttpActionContext actionContext)
+        {
+            var resp = actionContext.Request.Headers.Authorization;
+           
+            return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
+        }
     }
 }

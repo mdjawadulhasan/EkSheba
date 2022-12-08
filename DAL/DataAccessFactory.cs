@@ -41,7 +41,11 @@ namespace DAL
             return new RechargeTokenRepo();
         }
 
-        
+        public static IRepo<RechargeHistory, int> RechargeHistoryDataAccess()
+        {
+            return new RechargeHistoryRepo();
+        }
+
 
     }
 }
