@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    class AccountRepo : Repo, IRepo<Account, int>
+    class AccountRepo : Repo, IRepo<Account, int>,IRechargeToken
     {
         public bool Add(Account obj)
         {
@@ -42,6 +42,13 @@ namespace DAL.Repos
         {
             var acc = Get(obj.Id);
             db.Entry(acc).CurrentValues.SetValues(obj);
+            return db.SaveChanges() > 0;
+        }
+
+
+        public bool AddRechargeToken(RechargeToken obj)
+        {
+            db.RechargeTokens.Add(obj);
             return db.SaveChanges() > 0;
         }
     }

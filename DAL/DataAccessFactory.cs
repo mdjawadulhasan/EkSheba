@@ -34,5 +34,12 @@ namespace DAL
         {
             return new AccountRepo();
         }
+
+
+        public static IRechargeToken RecharheTokenDataAccess()
+        {
+            return new AccountRepo();
+        }
+
     }
 }

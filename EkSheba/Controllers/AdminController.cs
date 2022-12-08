@@ -84,5 +84,16 @@ namespace EkSheba.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
+
+
+
+        [Route("api/admin/BankAccount/genratetoken")]
+        [HttpGet]
+        public HttpResponseMessage GenrateRechargeToken()
+        {
+            var data = RechargeTokenService.GenrateRecharge();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
     }
 }
