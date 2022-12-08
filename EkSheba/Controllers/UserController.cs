@@ -11,14 +11,7 @@ namespace EkSheba.Controllers
 {
     public class UserController : ApiController
     {
-        [Route("api/users")]
-        [HttpGet]
-        public HttpResponseMessage Get()
-        {
-            var data = UserDetailService.Get();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-
-        }
+       
 
 
         [Route("api/user/{id}")]
@@ -82,6 +75,26 @@ namespace EkSheba.Controllers
 
         }
 
+
+        [Route("api/users/bank/reqaccount")]
+        [HttpPost]
+        public HttpResponseMessage AddAccount(AccountDTO acc)
+        {
+            if (ModelState.IsValid)
+            {
+                var resp = AccountService.Add(acc);
+                if (resp != false)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
+                }
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+        }
 
 
     }

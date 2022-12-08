@@ -30,6 +30,9 @@ namespace DAL
             return new LoginRepo();
         }
 
-
+        public static IRepo<Account, int> AccountDataAccess()
+        {
+            return new AccountRepo();
+        }
     }
 }
