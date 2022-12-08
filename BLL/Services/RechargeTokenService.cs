@@ -26,15 +26,20 @@ namespace BLL.Services
             return result;
         }
 
-        public static int Recharge(RechargeTokenDTO dto)
+        public static int RechargeAmount(RechargeTokenDTO dto)
         {
             var token = DataAccessFactory.RechargeTokenDataAccess().Get(dto.Token);
-            if (token.Status == 0)
+            if (token != null)
             {
-                token.Status = 1;
-                return token.Amount;
-               
+                if (token.Status == 0)
+                {
+                    token.Status = 1;
+                    DataAccessFactory.RechargeTokenDataAccess().Update(token);
+                    return token.Amount;
+                }
+                return 0;
             }
+
             return 0;
         }
 

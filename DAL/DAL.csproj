@@ -84,7 +84,6 @@
     <Compile Include="EF\UsersDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IURepo.cs" />
     <Compile Include="Interfaces\IRepo.cs" />
     <Compile Include="Interfaces\ITokenRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

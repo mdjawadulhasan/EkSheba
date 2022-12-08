@@ -47,10 +47,7 @@ namespace DAL
         }
 
 
-        public static IURepo UsersDataAccess()
-        {
-            return new UserDetailsRepo();
-        }
+      
 
 
     }

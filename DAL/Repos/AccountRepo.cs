@@ -38,6 +38,11 @@ namespace DAL.Repos
             throw new NotImplementedException();
         }
 
+        public Account GetbyFK(int id)
+        {
+            return db.Accounts.FirstOrDefault(t => t.A_FK_Nid == id);
+        }
+
         public bool Update(Account obj)
         {
             var acc = Get(obj.Id);

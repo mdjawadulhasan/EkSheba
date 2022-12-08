@@ -66,7 +66,7 @@ namespace BLL.Services
            
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
             var loginuser = DataAccessFactory.LoginDataAccess().Get(tk.Username);
-            var data = DataAccessFactory.UsersDataAccess().GetNid(loginuser.Id);
+            var data = DataAccessFactory.UserDetailDataAccess().GetbyFK(loginuser.Id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetail, UsersDetailDTO>());
             var mapper = new Mapper(config);
             var user = mapper.Map<UsersDetailDTO>(data);

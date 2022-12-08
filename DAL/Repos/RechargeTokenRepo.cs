@@ -38,6 +38,11 @@ namespace DAL.Repos
             return db.RechargeTokens.FirstOrDefault(t => t.Token.Equals(id));
         }
 
+        public RechargeToken GetbyFK(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Update(RechargeToken obj)
         {
             var acc = Get(obj.Id);

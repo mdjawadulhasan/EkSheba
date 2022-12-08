@@ -78,31 +78,61 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [UserFilter]
         [Route("api/users/bank/reqaccount")]
         [HttpPost]
-        public HttpResponseMessage AddAccount(AccountDTO acc)
+        public HttpResponseMessage AddAccount()
         {
-            if (ModelState.IsValid)
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var data = AuthService.GetCurrentUser(token);
+
+            var resp = AccountService.Add(data.Nid);
+            if (resp != false)
             {
-                var resp = AccountService.Add(acc);
-                if (resp != false)
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
+            }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+        }
+
+
+
+
+        [UserFilter]
+        [Route("api/users/bank/Recharge")]
+        [HttpPost]
+        public HttpResponseMessage Recharge(RechargeTokenDTO dto)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var data = AuthService.GetCurrentUser(token);
+
+            if (dto != null)
+            {
+                int amount = RechargeTokenService.RechargeAmount(dto);
+                if (amount > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
+                    var resp = AccountService.Recharge(data.Nid, amount);
+                    if (resp != false)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Balance updated", data = resp });
+                    }
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError);
                 }
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
 
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
 
-        /*var resp = Request.Headers.Authorization;
-        string token = resp.ToString();
-        var data = AuthService.GetCurrentUser(token);*/ 
-
-
     }
+
 }
+
+    
+
+
+
+

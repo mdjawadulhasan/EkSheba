@@ -11,6 +11,7 @@ namespace DAL.Interfaces
         List<CLASS> Get();
         CLASS Get(ID id);
 
+        CLASS GetbyFK(ID id);
         CLASS Get(string id);
         bool Add(CLASS obj);
         bool Update(CLASS obj);

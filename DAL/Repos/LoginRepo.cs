@@ -38,6 +38,11 @@ namespace DAL.Repos
             return db.Users.FirstOrDefault(u => u.Uname.Equals(uname));
         }
 
+        public User GetbyFK(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Update(User obj)
         {
             var dbuser = Get(obj.Id);

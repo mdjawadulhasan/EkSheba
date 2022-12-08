@@ -20,7 +20,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="R_FK_Nid" Type="int" Nullable="false" />
-          <Property Name="R_FK_RTid" Type="int" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -91,18 +90,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RechargeHistories_RechargeToken">
-          <End Role="RechargeToken" Type="Self.RechargeToken" Multiplicity="1" />
-          <End Role="RechargeHistories" Type="Self.RechargeHistories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RechargeToken">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RechargeHistories">
-              <PropertyRef Name="R_FK_RTid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersDetails_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="*" />
@@ -128,10 +115,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
-            <End Role="RechargeHistories" EntitySet="RechargeHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RechargeHistories_RechargeToken" Association="Self.FK_RechargeHistories_RechargeToken">
-            <End Role="RechargeToken" EntitySet="RechargeToken" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
@@ -160,11 +143,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="R_FK_Nid" Type="Int32" Nullable="false" />
-          <Property Name="R_FK_RTid" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UsersDetail" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="RechargeHistories" ToRole="UsersDetails" />
-          <NavigationProperty Name="RechargeToken" Relationship="Self.FK_RechargeHistories_RechargeToken" FromRole="RechargeHistories" ToRole="RechargeToken" />
         </EntityType>
         <EntityType Name="RechargeToken">
           <Key>
@@ -174,7 +155,6 @@
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeToken" FromRole="RechargeToken" ToRole="RechargeHistories" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -238,18 +218,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RechargeHistories_RechargeToken">
-          <End Role="RechargeToken" Type="Self.RechargeToken" Multiplicity="1" />
-          <End Role="RechargeHistories" Type="Self.RechargeHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RechargeToken">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RechargeHistories">
-              <PropertyRef Name="R_FK_RTid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersDetails_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="*" />
@@ -275,10 +243,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
-            <End Role="RechargeHistories" EntitySet="RechargeHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RechargeHistories_RechargeToken" Association="Self.FK_RechargeHistories_RechargeToken">
-            <End Role="RechargeToken" EntitySet="RechargeTokens" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
@@ -307,7 +271,6 @@
               <MappingFragment StoreEntitySet="RechargeHistories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="R_FK_Nid" ColumnName="R_FK_Nid" />
-                <ScalarProperty Name="R_FK_RTid" ColumnName="R_FK_RTid" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>

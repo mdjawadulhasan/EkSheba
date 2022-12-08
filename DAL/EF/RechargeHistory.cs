@@ -16,11 +16,9 @@ namespace DAL.EF
     {
         public int Id { get; set; }
         public int R_FK_Nid { get; set; }
-        public int R_FK_RTid { get; set; }
         public int Amount { get; set; }
         public System.DateTime Date { get; set; }
     
         public virtual UsersDetail UsersDetail { get; set; }
-        public virtual RechargeToken RechargeToken { get; set; }
     }
 }

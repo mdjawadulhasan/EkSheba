@@ -32,14 +32,13 @@ namespace BLL.Services
             return acc;
         }
 
-        public static bool Add(AccountDTO dto)
+        public static bool Add(int id)
         {
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AccountDTO, Account>());
-            var mapper = new Mapper(config);
-            var acc = mapper.Map<Account>(dto);
+            Account acc = new Account();
             acc.Status = 0;
             acc.Balance = 0;
+            acc.A_FK_Nid = id;
             var result = DataAccessFactory.AccountDataAccess().Add(acc);
             return result;
         }
@@ -59,6 +58,30 @@ namespace BLL.Services
         {
             var result = DataAccessFactory.AccountDataAccess().Delete(id);
             return result;
+        }
+
+        public static bool Recharge(int id,int amount)
+        {
+
+            var acc = DataAccessFactory.AccountDataAccess().GetbyFK(id);
+            if (acc.Status == 1)
+            {
+                int currnent_balance = (int)acc.Balance;
+                currnent_balance += amount;
+                acc.Balance = currnent_balance;
+                var result = DataAccessFactory.AccountDataAccess().Update(acc);
+
+                var rhistory = new RechargeHistory();
+                rhistory.R_FK_Nid = id;
+                rhistory.Amount = amount;
+                rhistory.Date = DateTime.Now;
+                
+
+                result = DataAccessFactory.RechargeHistoryDataAccess().Add(rhistory);
+                return result;
+            }
+
+            return false;
         }
     }
 }

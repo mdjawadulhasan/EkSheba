@@ -38,6 +38,11 @@ namespace DAL.Repos
             throw new NotImplementedException();
         }
 
+        public RechargeHistory GetbyFK(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Update(RechargeHistory obj)
         {
             var rc = Get(obj.Id);
