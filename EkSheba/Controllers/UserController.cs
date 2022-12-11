@@ -14,8 +14,27 @@ namespace EkSheba.Controllers
 {
     public class UserController : ApiController
     {
+        [UserFilter]
+        [Route("api/login/update")]
+        [HttpPost]
+        public HttpResponseMessage Update(LoginDTO user)
+        {
+            if (ModelState.IsValid)
+            {
+                var resp = LoginService.Update(user);
+                if (resp != false)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Updated", data = resp });
+                }
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+            }
 
-        
+        }
+
         [Route("api/user/{id}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
@@ -46,16 +65,7 @@ namespace EkSheba.Controllers
 
         }
 
-        [AdminFilter]
-        [Route("api/user/delete/{id}")]
-        [HttpGet]
-        public HttpResponseMessage Delete(int id)
-        {
-            var data = UserDetailService.Delete(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-
-        }
-
+        
         [UserFilter] 
         [Route("api/users/update")]
         [HttpPost]

@@ -61,6 +61,17 @@ namespace BLL.Services
         }
 
 
+        public static bool ChangeStatus(UsersDetailDTO dto,string status)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
+            var mapper = new Mapper(config);
+            var data = mapper.Map<UsersDetail>(dto);
+            data.Status = status;
+            var result = DataAccessFactory.UserDetailDataAccess().Update(data);
+            return result;
+
+        }
+
 
     }
 }

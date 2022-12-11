@@ -23,36 +23,57 @@ namespace EkSheba.Controllers
 
         }
 
-        
+        [AdminFilter]
+        [Route("api/user/delete/{id}")]
+        [HttpGet]
+        public HttpResponseMessage DeleteUser(int id)
+        {
+            var data = UserDetailService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
 
         [AdminFilter]
         [Route("api/login/delete/{id}")]
         [HttpPost]
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage DeleteUserLog(int id)
         {
             var data = LoginService.Delete(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
 
-        [UserFilter]
-        [Route("api/login/update")]
+
+        [AdminFilter]
+        [Route("api/user/active/{id}")]
         [HttpPost]
-        public HttpResponseMessage Update(LoginDTO user)
+        public HttpResponseMessage ActivateUser(int id)
         {
-            if (ModelState.IsValid)
+            var user = UserDetailService.Get(id);
+
+            var resp = UserDetailService.ChangeStatus(user,"1");
+            if (resp != false)
             {
-                var resp = LoginService.Update(user);
-                if (resp != false)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Updated", data = resp });
-                }
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Activated", data = resp });
             }
-            else
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+        [AdminFilter]
+        [Route("api/user/block/{id}")]
+        [HttpPost]
+        public HttpResponseMessage BlockUser(int id)
+        {
+            var user = UserDetailService.Get(id);
+            var resp = UserDetailService.ChangeStatus(user, "2");
+            if (resp != false)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Activated", data = resp });
             }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
 
         }
 
@@ -76,7 +97,7 @@ namespace EkSheba.Controllers
         {
             if (ModelState.IsValid)
             {
-                var resp = AccountService.ChangeAccStatus(id,1);
+                var resp = AccountService.ChangeAccStatus(id, 1);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Accepted", data = resp });
