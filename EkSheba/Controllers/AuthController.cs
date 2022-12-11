@@ -33,6 +33,7 @@ namespace EkSheba.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
 
+
         [Route("api/login/add")]
         [HttpPost]
         public HttpResponseMessage Post(LoginDTO user)
@@ -43,37 +44,6 @@ namespace EkSheba.Controllers
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
-                }
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
-        }
-
-        [AdminFilter]
-        [Route("api/login/delete/{id}")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
-        {
-            var data = LoginService.Delete(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-
-        }
-
-        [UserFilter]
-        [Route("api/login/update")]
-        [HttpPost]
-        public HttpResponseMessage Update(LoginDTO user)
-        {
-            if (ModelState.IsValid)
-            {
-                var resp = LoginService.Update(user);
-                if (resp != false)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Updated", data = resp });
                 }
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }

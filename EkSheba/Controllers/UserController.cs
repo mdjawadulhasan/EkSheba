@@ -15,8 +15,7 @@ namespace EkSheba.Controllers
     public class UserController : ApiController
     {
 
-
-
+        
         [Route("api/user/{id}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
@@ -47,7 +46,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [AdminFilter]
         [Route("api/user/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage Delete(int id)
@@ -57,7 +56,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [UserFilter] 
         [Route("api/users/update")]
         [HttpPost]
         public HttpResponseMessage Update(UsersDetailDTO user)
@@ -87,8 +86,8 @@ namespace EkSheba.Controllers
             var r = Request.Headers.Authorization;
             string token = r.ToString();
             var data = AuthService.GetCurrentUser(token);
-
             var resp = AccountService.Add(data.Nid);
+
             if (resp != false)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });

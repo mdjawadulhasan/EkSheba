@@ -41,13 +41,14 @@ namespace BLL.Services
         public static bool IsTokenValid(string token,int utype)
         {
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
+            var CurrentUser = GetCurrentUser(token);
             if (tk != null )
             {
                 DateTime dt1 = (DateTime)tk.ExpirationTime;
                 DateTime crnt = DateTime.Now;
 
-                var user = DataAccessFactory.LoginDataAccess().Get(tk.Username);
-                if (DateTime.Compare(crnt, dt1) < 0 && utype == user.Type)
+                var userlog = DataAccessFactory.LoginDataAccess().Get(tk.Username);
+                if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type && CurrentUser.Status.Equals(1))
                 {
                     return true;
                 }
