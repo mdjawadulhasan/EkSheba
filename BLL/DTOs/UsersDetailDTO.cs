@@ -24,7 +24,7 @@ namespace BLL.DTOs
         public string FathersName { get; set; }
         [Required]
         public string MotherName { get; set; }
-        [Required]
+        
         public string Status { get; set; }
 
         public Nullable<int> FK_Uid { get; set; }

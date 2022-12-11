@@ -32,12 +32,14 @@ namespace BLL.Services
             return user;
         }
 
-        public static bool Add(UsersDetailDTO dto)
+        public static bool Add(UsersDetailDTO dto,int id)
         {
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UsersDetailDTO, UsersDetail>());
             var mapper = new Mapper(config);
             var data = mapper.Map<UsersDetail>(dto);
+            data.FK_Uid = id;
+            data.Status = "0";
             var result = DataAccessFactory.UserDetailDataAccess().Add(data);
             return result;
         }

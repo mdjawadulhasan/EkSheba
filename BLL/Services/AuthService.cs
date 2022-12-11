@@ -28,7 +28,8 @@ namespace BLL.Services
                 var rttk = DataAccessFactory.TokenDataAccess().Add(tk);
                 if (rttk != null)
                 {
-                    var cfg = new MapperConfiguration(c => {
+                    var cfg = new MapperConfiguration(c =>
+                    {
                         c.CreateMap<Token, TokenDTO>();
                     });
                     var mapper = new Mapper(cfg);
@@ -38,23 +39,37 @@ namespace BLL.Services
             }
             return null;
         }
-        public static bool IsTokenValid(string token,int utype)
+        public static bool IsTokenValid(string token, int utype)
         {
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
             var CurrentUser = GetCurrentUser(token);
-            if (tk != null )
+            if (tk != null)
             {
                 DateTime dt1 = (DateTime)tk.ExpirationTime;
                 DateTime crnt = DateTime.Now;
 
                 var userlog = DataAccessFactory.LoginDataAccess().Get(tk.Username);
-                if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type && CurrentUser.Status.Equals(1))
+                if (utype == 2)
                 {
-                    return true;
+                    if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type && !CurrentUser.Status.Equals(2))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return false;
+                    if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
             }
@@ -64,7 +79,7 @@ namespace BLL.Services
 
         public static UsersDetailDTO GetCurrentUser(string token)
         {
-           
+
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
             var loginuser = DataAccessFactory.LoginDataAccess().Get(tk.Username);
             var data = DataAccessFactory.UserDetailDataAccess().GetbyFK(loginuser.Id);
@@ -73,6 +88,19 @@ namespace BLL.Services
             var user = mapper.Map<UsersDetailDTO>(data);
             return user;
         }
+
+        public static LoginDTO GetCurrentUserLog(string token)
+        {
+
+            var tk = DataAccessFactory.TokenDataAccess().Get(token);
+            var loginuser = DataAccessFactory.LoginDataAccess().Get(tk.Username);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, LoginDTO>());
+            var mapper = new Mapper(config);
+            var user = mapper.Map<LoginDTO>(loginuser);
+            return user;
+        }
+
+
     }
 }
 

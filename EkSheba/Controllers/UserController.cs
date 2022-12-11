@@ -51,7 +51,12 @@ namespace EkSheba.Controllers
         {
             if (ModelState.IsValid)
             {
-                var resp = UserDetailService.Add(u);
+                var r = Request.Headers.Authorization;
+                string token = r.ToString();
+                var data = AuthService.GetCurrentUserLog(token);
+
+
+                var resp = UserDetailService.Add(u,data.Id);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });

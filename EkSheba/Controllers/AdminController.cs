@@ -71,7 +71,7 @@ namespace EkSheba.Controllers
             var resp = UserDetailService.ChangeStatus(user, "2");
             if (resp != false)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Activated", data = resp });
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Blocked", data = resp });
             }
             return Request.CreateResponse(HttpStatusCode.InternalServerError);
 
@@ -121,7 +121,7 @@ namespace EkSheba.Controllers
                 var resp = AccountService.ChangeAccStatus(id, 2);
                 if (resp != false)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Accepted", data = resp });
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Blocked", data = resp });
                 }
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
