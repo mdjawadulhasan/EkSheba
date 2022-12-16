@@ -4,14 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="49aa6b13a24e458ab2680c708e4f66b8" Name="Diagram1">
-        <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.RechargeHistory" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.RechargeToken" Width="1.5" PointX="0.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="2.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.UsersDetail" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+      <Diagram DiagramId="bbc4310e10e24ac48c8bdd26b8b976b3" Name="Diagram1">
+        <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Passport" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Passportapplication" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.RechargeHistory" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.RechargeToken" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.User" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.UsersDetail" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <AssociationConnector Association="EkShebaModel.FK_Accounts_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="EkShebaModel.FK_Passport_UsersDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="EkShebaModel.FK_Passportapplications_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_RechargeHistories_RechargeHistories" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_UsersDetails_Users" ManuallyRouted="false" />
       </Diagram>

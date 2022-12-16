@@ -54,9 +54,8 @@ namespace EkSheba.Controllers
                 var r = Request.Headers.Authorization;
                 string token = r.ToString();
                 var data = AuthService.GetCurrentUserLog(token);
+                var resp = UserDetailService.Add(u, data.Id);
 
-
-                var resp = UserDetailService.Add(u,data.Id);
                 if (resp != false)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
@@ -70,8 +69,8 @@ namespace EkSheba.Controllers
 
         }
 
-        
-        [UserFilter] 
+
+        [UserFilter]
         [Route("api/users/update")]
         [HttpPost]
         public HttpResponseMessage Update(UsersDetailDTO user)
@@ -141,11 +140,64 @@ namespace EkSheba.Controllers
             return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
 
+
+
+        [UserFilter]
+        [Route("api/users/passportapply/{type}")]
+        [HttpGet]
+        public HttpResponseMessage PassportApply(int type)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
+
+
+            var ExistsApp = PassportAppService.GetbyFk(user.Nid);
+            int balance = AccountService.CurentBalance(user.Nid);
+
+            if (ExistsApp != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application Pending Already"});
+            }
+            else
+            {
+                if((type == 1 && balance < 10000) || (type == 2 && balance<7000) || (type == 3 && balance < 5000))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient Balance" });
+                }
+                else
+                {
+                    AccountService.ChargeForPassport(user.Nid,type);
+                    bool res=PassportAppService.Add(user.Nid,type);
+                    if (res)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application submitted" });
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                    }
+                }
+                
+            }
+
+
+            
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+
+
+
+
     }
 
 }
 
-    
+
 
 
 

@@ -17,7 +17,7 @@ namespace BLL.Services
             for (int i = 0; i < 10; i++)
             {
                 RechargeToken rc = new RechargeToken();
-                rc.Amount = 200;
+                rc.Amount = 5000;
                 rc.Token = Guid.NewGuid().ToString();
                 rc.Status = 0;
                 result = DataAccessFactory.RechargeTokenDataAccess().Add(rc);

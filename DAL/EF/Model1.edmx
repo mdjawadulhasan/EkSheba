@@ -14,6 +14,26 @@
           <Property Name="Balance" Type="int" />
           <Property Name="Status" Type="int" />
         </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="P_FK_NID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IssueDate" Type="datetime" />
+          <Property Name="ValidTill" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Passportapplications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PA_FK_NID" Type="int" />
+          <Property Name="ApplyDate" Type="datetime" />
+          <Property Name="DelDate" Type="datetime" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
         <EntityType Name="RechargeHistories">
           <Key>
             <PropertyRef Name="Id" />
@@ -78,6 +98,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Passport_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="P_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passportapplications_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <End Role="Passportapplications" Type="Self.Passportapplications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="Passportapplications">
+              <PropertyRef Name="PA_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RechargeHistories_RechargeHistories">
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="1" />
           <End Role="RechargeHistories" Type="Self.RechargeHistories" Multiplicity="*" />
@@ -104,6 +148,8 @@
         </Association>
         <EntityContainer Name="EkShebaModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passportapplications" EntityType="Self.Passportapplications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeToken" EntityType="Self.RechargeToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
@@ -112,6 +158,14 @@
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_UsersDetails" Association="Self.FK_Passport_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passportapplications_UsersDetails" Association="Self.FK_Passportapplications_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="Passportapplications" EntitySet="Passportapplications" />
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
@@ -136,6 +190,28 @@
           <Property Name="Balance" Type="Int32" />
           <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="UsersDetail" Relationship="Self.FK_Accounts_Users" FromRole="Accounts" ToRole="UsersDetails" />
+        </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="P_FK_NID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IssueDate" Type="DateTime" Precision="3" />
+          <Property Name="ValidTill" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_Passport_UsersDetails" FromRole="Passport" ToRole="UsersDetails" />
+        </EntityType>
+        <EntityType Name="Passportapplication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PA_FK_NID" Type="Int32" />
+          <Property Name="ApplyDate" Type="DateTime" Precision="3" />
+          <Property Name="DelDate" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.FK_Passportapplications_UsersDetails" FromRole="Passportapplications" ToRole="UsersDetails" />
         </EntityType>
         <EntityType Name="RechargeHistory">
           <Key>
@@ -191,6 +267,8 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FK_Uid" Type="Int32" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Users" FromRole="UsersDetails" ToRole="Accounts" />
+          <NavigationProperty Name="Passports" Relationship="Self.FK_Passport_UsersDetails" FromRole="UsersDetails" ToRole="Passport" />
+          <NavigationProperty Name="Passportapplications" Relationship="Self.FK_Passportapplications_UsersDetails" FromRole="UsersDetails" ToRole="Passportapplications" />
           <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="UsersDetails" ToRole="RechargeHistories" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersDetails_Users" FromRole="UsersDetails" ToRole="Users" />
         </EntityType>
@@ -203,6 +281,30 @@
             </Principal>
             <Dependent Role="Accounts">
               <PropertyRef Name="A_FK_Nid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="P_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passportapplications_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
+          <End Role="Passportapplications" Type="Self.Passportapplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="Passportapplications">
+              <PropertyRef Name="PA_FK_NID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -232,6 +334,8 @@
         </Association>
         <EntityContainer Name="EkShebaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Passports" EntityType="Self.Passport" />
+          <EntitySet Name="Passportapplications" EntityType="Self.Passportapplication" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistory" />
           <EntitySet Name="RechargeTokens" EntityType="Self.RechargeToken" />
           <EntitySet Name="Tokens" EntityType="Self.Token" />
@@ -240,6 +344,14 @@
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_UsersDetails" Association="Self.FK_Passport_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="Passport" EntitySet="Passports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passportapplications_UsersDetails" Association="Self.FK_Passportapplications_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="Passportapplications" EntitySet="Passportapplications" />
           </AssociationSet>
           <AssociationSet Name="FK_RechargeHistories_RechargeHistories" Association="Self.FK_RechargeHistories_RechargeHistories">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
@@ -263,6 +375,28 @@
                 <ScalarProperty Name="A_FK_Nid" ColumnName="A_FK_Nid" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passports">
+            <EntityTypeMapping TypeName="EkShebaModel.Passport">
+              <MappingFragment StoreEntitySet="Passport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="P_FK_NID" ColumnName="P_FK_NID" />
+                <ScalarProperty Name="IssueDate" ColumnName="IssueDate" />
+                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passportapplications">
+            <EntityTypeMapping TypeName="EkShebaModel.Passportapplication">
+              <MappingFragment StoreEntitySet="Passportapplications">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PA_FK_NID" ColumnName="PA_FK_NID" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="DelDate" ColumnName="DelDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

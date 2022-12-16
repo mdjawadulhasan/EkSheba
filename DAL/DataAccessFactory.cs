@@ -46,8 +46,11 @@ namespace DAL
             return new RechargeHistoryRepo();
         }
 
+        public static IRepo<Passportapplication, int> PassportapplicationDataAccess()
+        {
+            return new PassportAppRepo();
+        }
 
-      
 
 
     }

@@ -83,5 +83,40 @@ namespace BLL.Services
 
             return false;
         }
+
+
+        public static int CurentBalance(int id)
+        {
+            var acc = DataAccessFactory.AccountDataAccess().GetbyFK(id);
+            if (acc.Status == 1)
+            {
+                return (int)acc.Balance;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static void ChargeForPassport(int id, int type)
+        {
+            var acc = DataAccessFactory.AccountDataAccess().GetbyFK(id);
+            int balance = (int)acc.Balance;
+
+            if (type == 1)
+            {
+                balance = balance - 10000;
+            }else if (type == 2)
+            {
+                balance = balance -70000;
+            }else if (type == 3)
+            {
+                balance = balance - 50000;
+            }
+
+            acc.Balance = balance;
+            DataAccessFactory.AccountDataAccess().Update(acc);
+
+        }
     }
 }

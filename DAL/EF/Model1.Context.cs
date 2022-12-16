@@ -26,6 +26,8 @@ namespace DAL.EF
         }
     
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Passport> Passports { get; set; }
+        public virtual DbSet<Passportapplication> Passportapplications { get; set; }
         public virtual DbSet<RechargeHistory> RechargeHistories { get; set; }
         public virtual DbSet<RechargeToken> RechargeTokens { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }

@@ -18,6 +18,8 @@ namespace DAL.EF
         public UsersDetail()
         {
             this.Accounts = new HashSet<Account>();
+            this.Passports = new HashSet<Passport>();
+            this.Passportapplications = new HashSet<Passportapplication>();
             this.RechargeHistories = new HashSet<RechargeHistory>();
         }
     
@@ -34,6 +36,10 @@ namespace DAL.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Passport> Passports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Passportapplication> Passportapplications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RechargeHistory> RechargeHistories { get; set; }
         public virtual User User { get; set; }

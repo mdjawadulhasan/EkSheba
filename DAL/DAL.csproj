@@ -69,6 +69,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EF\Passport.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Passportapplication.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\RechargeHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -90,6 +96,7 @@
     <Compile Include="Interfaces\IAuth.cs" />
     <Compile Include="Repos\AccountRepo.cs" />
     <Compile Include="Repos\LoginRepo.cs" />
+    <Compile Include="Repos\PassportAppRepo.cs" />
     <Compile Include="Repos\RechargeHistoryRepo.cs" />
     <Compile Include="Repos\RechargeTokenRepo.cs" />
     <Compile Include="Repos\Repo.cs" />
