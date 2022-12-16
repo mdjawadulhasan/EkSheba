@@ -12,6 +12,15 @@ namespace BLL.Services
 {
     public class PassportAppService
     {
+        public static List<PassportAppDTO> Get()
+        {
+
+            var data = DataAccessFactory.PassportapplicationDataAccess().Get();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Passportapplication, PassportAppDTO>());
+            var mapper = new Mapper(config);
+            var p = mapper.Map<List<PassportAppDTO>>(data);
+            return p;
+        }
 
         public static PassportAppDTO GetbyFk(int id)
         {

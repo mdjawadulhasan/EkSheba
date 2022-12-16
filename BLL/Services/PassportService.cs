@@ -13,6 +13,17 @@ namespace BLL.Services
     public class PassportService
     {
 
+        public static List<PassportDTO> Get()
+        {
+
+            var data = DataAccessFactory.PassportDataAccess().Get();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Passport, PassportDTO>());
+            var mapper = new Mapper(config);
+            var p = mapper.Map<List<PassportDTO>>(data);
+            return p;
+        }
+
+
         public static bool AcceptRequest(int id)
         {
 
@@ -40,10 +51,16 @@ namespace BLL.Services
                 return b;
             }
 
-            return false;
         }
 
+        public static bool BlockPassport(int id)
+        {
 
+            var edata = DataAccessFactory.PassportDataAccess().Get(id);
+            edata.Status = 2;
+            bool b = DataAccessFactory.PassportDataAccess().Update(edata);
+            return b;
 
+        }
     }
 }

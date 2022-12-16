@@ -184,6 +184,24 @@ namespace EkSheba.Controllers
         }
 
 
+        [Route("api/admin/passport/applications")]
+        [HttpGet]
+        public HttpResponseMessage GetPassportapplications()
+        {
+            var data = PassportAppService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+        [Route("api/admin/passports")]
+        [HttpGet]
+        public HttpResponseMessage GetPassports()
+        {
+            var data = PassportService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
 
         [Route("api/admin/passport/Accept/{id}")]
         [HttpGet]
@@ -199,6 +217,23 @@ namespace EkSheba.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
             
+
+        }
+
+
+        [Route("api/admin/passport/Block/{id}")]
+        [HttpGet]
+        public HttpResponseMessage BlockPassport(int id)
+        {
+            bool resp = PassportService.BlockPassport(id);
+            if (resp)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Blocked", data = resp });
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
 
         }
 

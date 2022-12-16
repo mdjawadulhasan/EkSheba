@@ -25,7 +25,7 @@ namespace DAL.Repos
 
         public List<Passport> Get()
         {
-            throw new NotImplementedException();
+            return db.Passports.ToList();
         }
 
         public Passport Get(int id)
