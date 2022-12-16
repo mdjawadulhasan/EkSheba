@@ -143,7 +143,7 @@ namespace EkSheba.Controllers
 
 
         [UserFilter]
-        [Route("api/users/passportapply/{type}")]
+        [Route("api/users/passport/apply/{type}")]
         [HttpGet]
         public HttpResponseMessage PassportApply(int type)
         {
@@ -182,9 +182,6 @@ namespace EkSheba.Controllers
                 
             }
 
-
-            
-            return Request.CreateResponse(HttpStatusCode.InternalServerError);
 
         }
 

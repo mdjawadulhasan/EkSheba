@@ -97,6 +97,7 @@
     <Compile Include="Repos\AccountRepo.cs" />
     <Compile Include="Repos\LoginRepo.cs" />
     <Compile Include="Repos\PassportAppRepo.cs" />
+    <Compile Include="Repos\PassportRepo.cs" />
     <Compile Include="Repos\RechargeHistoryRepo.cs" />
     <Compile Include="Repos\RechargeTokenRepo.cs" />
     <Compile Include="Repos\Repo.cs" />

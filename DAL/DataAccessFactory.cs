@@ -51,6 +51,12 @@ namespace DAL
             return new PassportAppRepo();
         }
 
+        public static IRepo<Passport, int> PassportDataAccess()
+        {
+            return new PassportRepo();
+        }
+
+
 
 
     }

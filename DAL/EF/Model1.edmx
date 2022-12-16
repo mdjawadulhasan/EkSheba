@@ -18,8 +18,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="P_FK_NID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_FK_NID" Type="int" Nullable="false" />
           <Property Name="IssueDate" Type="datetime" />
           <Property Name="ValidTill" Type="datetime" />
           <Property Name="Status" Type="int" />
@@ -195,8 +195,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="P_FK_NID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_FK_NID" Type="Int32" Nullable="false" />
           <Property Name="IssueDate" Type="DateTime" Precision="3" />
           <Property Name="ValidTill" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />

@@ -11,7 +11,7 @@ using System.Web.Http.Cors;
 
 namespace EkSheba.Controllers
 {
-    [EnableCors("*","*","*")]
+    [EnableCors("*", "*", "*")]
     /*[AdminFilter]*/
     public class AdminController : ApiController
     {
@@ -53,7 +53,7 @@ namespace EkSheba.Controllers
 
         }
 
-       
+
         [Route("api/user/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage DeleteUser(int id)
@@ -64,7 +64,7 @@ namespace EkSheba.Controllers
         }
 
 
-        
+
         [Route("api/login/delete/{id}")]
         [HttpPost]
         public HttpResponseMessage DeleteUserLog(int id)
@@ -75,14 +75,14 @@ namespace EkSheba.Controllers
         }
 
 
-        
+
         [Route("api/user/active/{id}")]
         [HttpPost]
         public HttpResponseMessage ActivateUser(int id)
         {
             var user = UserDetailService.Get(id);
 
-            var resp = UserDetailService.ChangeStatus(user,"1");
+            var resp = UserDetailService.ChangeStatus(user, "1");
             if (resp != false)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Activated", data = resp });
@@ -92,7 +92,7 @@ namespace EkSheba.Controllers
         }
 
 
-        
+
         [Route("api/user/block/{id}")]
         [HttpPost]
         public HttpResponseMessage BlockUser(int id)
@@ -107,7 +107,7 @@ namespace EkSheba.Controllers
 
         }
 
-        
+
         [Route("api/admin/BankAccount/accounts")]
         [HttpGet]
         public HttpResponseMessage GetAccounts()
@@ -120,7 +120,7 @@ namespace EkSheba.Controllers
 
 
 
-        
+
         [Route("api/admin/BankAccount/AcceptAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage AcceptAcc(int id)
@@ -141,7 +141,7 @@ namespace EkSheba.Controllers
 
         }
 
-       
+
         [Route("api/admin/BankAccount/BlockAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage BlockAcc(int id)
@@ -162,7 +162,7 @@ namespace EkSheba.Controllers
 
         }
 
-        
+
         [Route("api/admin/BankAccount/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage DeleteBankacc(int id)
@@ -173,7 +173,7 @@ namespace EkSheba.Controllers
         }
 
 
-        
+
         [Route("api/admin/BankAccount/genratetoken")]
         [HttpGet]
         public HttpResponseMessage GenrateRechargeToken()
@@ -182,5 +182,25 @@ namespace EkSheba.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
+
+
+
+        [Route("api/admin/passport/Accept/{id}")]
+        [HttpGet]
+        public HttpResponseMessage AcceptPassport(int id)
+        {
+            bool resp = PassportService.AcceptRequest(id);
+            if (resp)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Accepted", data = resp });
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            
+
+        }
+
     }
 }
