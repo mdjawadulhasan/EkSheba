@@ -38,6 +38,11 @@ namespace DAL.Repos
             throw new NotImplementedException();
         }
 
+        public Passport Get(int id, string id2)
+        {
+            throw new NotImplementedException();
+        }
+
         public Passport GetbyFK(int id)
         {
             return db.Passports.FirstOrDefault(t => t.P_FK_NID == id);

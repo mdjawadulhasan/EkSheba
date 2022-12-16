@@ -38,6 +38,11 @@ namespace DAL.Repos
             return db.Users.FirstOrDefault(u => u.Uname.Equals(uname));
         }
 
+        public User Get(int id, string id2)
+        {
+            throw new NotImplementedException();
+        }
+
         public User GetbyFK(int id)
         {
             throw new NotImplementedException();

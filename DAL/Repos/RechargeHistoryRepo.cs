@@ -38,6 +38,11 @@ namespace DAL.Repos
             throw new NotImplementedException();
         }
 
+        public RechargeHistory Get(int id, string id2)
+        {
+            throw new NotImplementedException();
+        }
+
         public RechargeHistory GetbyFK(int id)
         {
             throw new NotImplementedException();

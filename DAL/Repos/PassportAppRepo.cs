@@ -39,6 +39,11 @@ namespace DAL.Repos
             throw new NotImplementedException();
         }
 
+        public Passportapplication Get(int id, string id2)
+        {
+            throw new NotImplementedException();
+        }
+
         public Passportapplication GetbyFK(int id)
         {
 

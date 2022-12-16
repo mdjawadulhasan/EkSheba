@@ -33,5 +33,7 @@ namespace DAL.EF
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersDetail> UsersDetails { get; set; }
+        public virtual DbSet<FiscalYIncome> FiscalYIncomes { get; set; }
+        public virtual DbSet<IncomeTax> IncomeTaxes { get; set; }
     }
 }

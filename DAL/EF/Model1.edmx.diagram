@@ -18,6 +18,10 @@
         <AssociationConnector Association="EkShebaModel.FK_Passportapplications_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_RechargeHistories_RechargeHistories" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_UsersDetails_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EkShebaModel.FiscalYIncome" Width="1.5" PointX="5.25" PointY="12.75" />
+        <EntityTypeShape EntityType="EkShebaModel.IncomeTax" Width="1.5" PointX="5.25" PointY="16.375" />
+        <AssociationConnector Association="EkShebaModel.FK_FiscalYIncome_UsersDetails" />
+        <AssociationConnector Association="EkShebaModel.FK_IncomeTax_UsersDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

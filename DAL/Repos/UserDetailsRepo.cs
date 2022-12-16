@@ -56,5 +56,10 @@ namespace DAL.Repos
         {
             return db.UsersDetails.FirstOrDefault(t => t.FK_Uid == id);
         }
+
+        public UsersDetail Get(int id, string id2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

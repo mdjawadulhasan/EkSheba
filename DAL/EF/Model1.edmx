@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,6 +13,31 @@
           <Property Name="A_FK_Nid" Type="int" />
           <Property Name="Balance" Type="int" />
           <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="FiscalYIncome">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fis_FK_NID" Type="int" />
+          <Property Name="BasicSalary" Type="int" />
+          <Property Name="HouseRent" Type="int" />
+          <Property Name="MedicalAllowancw" Type="int" />
+          <Property Name="Conveyance" Type="int" />
+          <Property Name="Incentive" Type="int" />
+          <Property Name="FestivalBonus" Type="int" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="IncomeTax">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IN_FK_NID" Type="int" />
+          <Property Name="TaxAmount" Type="int" />
+          <Property Name="Paid" Type="int" />
+          <Property Name="Balance" Type="int" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Passport">
           <Key>
@@ -98,6 +123,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FiscalYIncome_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="1" />
+          <End Role="FiscalYIncome" Type="Self.FiscalYIncome" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="FiscalYIncome">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IncomeTax_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <End Role="IncomeTax" Type="Self.IncomeTax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="IncomeTax">
+              <PropertyRef Name="IN_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Passport_UsersDetails">
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="1" />
           <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
@@ -148,6 +197,8 @@
         </Association>
         <EntityContainer Name="EkShebaModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FiscalYIncome" EntityType="Self.FiscalYIncome" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IncomeTax" EntityType="Self.IncomeTax" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Passportapplications" EntityType="Self.Passportapplications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
@@ -158,6 +209,14 @@
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FiscalYIncome_UsersDetails" Association="Self.FK_FiscalYIncome_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="FiscalYIncome" EntitySet="FiscalYIncome" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IncomeTax_UsersDetails" Association="Self.FK_IncomeTax_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="IncomeTax" EntitySet="IncomeTax" />
           </AssociationSet>
           <AssociationSet Name="FK_Passport_UsersDetails" Association="Self.FK_Passport_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
@@ -176,8 +235,7 @@
             <End Role="UsersDetails" EntitySet="UsersDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EkShebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -271,6 +329,8 @@
           <NavigationProperty Name="Passportapplications" Relationship="Self.FK_Passportapplications_UsersDetails" FromRole="UsersDetails" ToRole="Passportapplications" />
           <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="UsersDetails" ToRole="RechargeHistories" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersDetails_Users" FromRole="UsersDetails" ToRole="Users" />
+          <NavigationProperty Name="FiscalYIncome" Relationship="EkShebaModel.FK_FiscalYIncome_UsersDetails" FromRole="UsersDetail" ToRole="FiscalYIncome" />
+          <NavigationProperty Name="IncomeTaxes" Relationship="EkShebaModel.FK_IncomeTax_UsersDetails" FromRole="UsersDetail" ToRole="IncomeTax" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
           <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
@@ -361,7 +421,68 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersDetails" EntitySet="UsersDetails" />
           </AssociationSet>
+          <EntitySet Name="FiscalYIncomes" EntityType="EkShebaModel.FiscalYIncome" />
+          <EntitySet Name="IncomeTaxes" EntityType="EkShebaModel.IncomeTax" />
+          <AssociationSet Name="FK_FiscalYIncome_UsersDetails" Association="EkShebaModel.FK_FiscalYIncome_UsersDetails">
+            <End Role="UsersDetail" EntitySet="UsersDetails" />
+            <End Role="FiscalYIncome" EntitySet="FiscalYIncomes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IncomeTax_UsersDetails" Association="EkShebaModel.FK_IncomeTax_UsersDetails">
+            <End Role="UsersDetail" EntitySet="UsersDetails" />
+            <End Role="IncomeTax" EntitySet="IncomeTaxes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="FiscalYIncome">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fis_FK_NID" Type="Int32" />
+          <Property Name="BasicSalary" Type="Int32" />
+          <Property Name="HouseRent" Type="Int32" />
+          <Property Name="MedicalAllowancw" Type="Int32" />
+          <Property Name="Conveyance" Type="Int32" />
+          <Property Name="Incentive" Type="Int32" />
+          <Property Name="FestivalBonus" Type="Int32" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_FiscalYIncome_UsersDetails" FromRole="FiscalYIncome" ToRole="UsersDetail" />
+        </EntityType>
+        <EntityType Name="IncomeTax">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IN_FK_NID" Type="Int32" />
+          <Property Name="TaxAmount" Type="Int32" />
+          <Property Name="Paid" Type="Int32" />
+          <Property Name="Balance" Type="Int32" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_IncomeTax_UsersDetails" FromRole="IncomeTax" ToRole="UsersDetail" />
+        </EntityType>
+        <Association Name="FK_FiscalYIncome_UsersDetails">
+          <End Type="EkShebaModel.UsersDetail" Role="UsersDetail" Multiplicity="1" />
+          <End Type="EkShebaModel.FiscalYIncome" Role="FiscalYIncome" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="FiscalYIncome">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IncomeTax_UsersDetails">
+          <End Type="EkShebaModel.UsersDetail" Role="UsersDetail" Multiplicity="0..1" />
+          <End Type="EkShebaModel.IncomeTax" Role="IncomeTax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="IncomeTax">
+              <PropertyRef Name="IN_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -454,6 +575,33 @@
                 <ScalarProperty Name="MotherName" ColumnName="MotherName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="FK_Uid" ColumnName="FK_Uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FiscalYIncomes">
+            <EntityTypeMapping TypeName="EkShebaModel.FiscalYIncome">
+              <MappingFragment StoreEntitySet="FiscalYIncome">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="FestivalBonus" ColumnName="FestivalBonus" />
+                <ScalarProperty Name="Incentive" ColumnName="Incentive" />
+                <ScalarProperty Name="Conveyance" ColumnName="Conveyance" />
+                <ScalarProperty Name="MedicalAllowancw" ColumnName="MedicalAllowancw" />
+                <ScalarProperty Name="HouseRent" ColumnName="HouseRent" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="Fis_FK_NID" ColumnName="Fis_FK_NID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IncomeTaxes">
+            <EntityTypeMapping TypeName="EkShebaModel.IncomeTax">
+              <MappingFragment StoreEntitySet="IncomeTax">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="IN_FK_NID" ColumnName="IN_FK_NID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

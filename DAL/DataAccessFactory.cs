@@ -56,6 +56,11 @@ namespace DAL
             return new PassportRepo();
         }
 
+        public static IRepo<FiscalYIncome, int> FiscalYIncomeDataAccess()
+        {
+            return new FiscalYIncomeRepo();
+        }
+
 
 
 
