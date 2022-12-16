@@ -12,6 +12,21 @@ namespace BLL.Services
 {
     public class LoginService
     {
+
+
+
+        public static List<LoginDTO> Get()
+        {
+
+            var data = DataAccessFactory.LoginDataAccess().Get();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, LoginDTO>());
+            var mapper = new Mapper(config);
+            var users = mapper.Map<List<LoginDTO>>(data);
+            return users;
+        }
+
+
+
         public static LoginDTO Get(int id)
         {
             var data = DataAccessFactory.LoginDataAccess().Get(id);

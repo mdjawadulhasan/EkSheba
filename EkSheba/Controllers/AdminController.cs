@@ -7,13 +7,43 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EkSheba.Controllers
 {
+    [EnableCors("*","*","*")]
+    /*[AdminFilter]*/
     public class AdminController : ApiController
     {
 
-        [AdminFilter]
+        [Route("api/login/users")]
+        [HttpGet]
+        public HttpResponseMessage GetLogusers()
+        {
+            var data = LoginService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+        [Route("api/login/delete/{id}")]
+        [HttpGet]
+        public HttpResponseMessage DeleteLogUser(int id)
+        {
+            var data = LoginService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+
+        [Route("api/login/user/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetLogUser(int id)
+        {
+            var data = LoginService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
         [Route("api/users")]
         [HttpGet]
         public HttpResponseMessage Get()
@@ -23,7 +53,7 @@ namespace EkSheba.Controllers
 
         }
 
-        [AdminFilter]
+       
         [Route("api/user/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage DeleteUser(int id)
@@ -34,7 +64,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [AdminFilter]
+        
         [Route("api/login/delete/{id}")]
         [HttpPost]
         public HttpResponseMessage DeleteUserLog(int id)
@@ -45,7 +75,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [AdminFilter]
+        
         [Route("api/user/active/{id}")]
         [HttpPost]
         public HttpResponseMessage ActivateUser(int id)
@@ -62,7 +92,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [AdminFilter]
+        
         [Route("api/user/block/{id}")]
         [HttpPost]
         public HttpResponseMessage BlockUser(int id)
@@ -77,7 +107,7 @@ namespace EkSheba.Controllers
 
         }
 
-        [AdminFilter]
+        
         [Route("api/admin/BankAccount/accounts")]
         [HttpGet]
         public HttpResponseMessage GetAccounts()
@@ -90,7 +120,7 @@ namespace EkSheba.Controllers
 
 
 
-        [AdminFilter]
+        
         [Route("api/admin/BankAccount/AcceptAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage AcceptAcc(int id)
@@ -111,7 +141,7 @@ namespace EkSheba.Controllers
 
         }
 
-        [AdminFilter]
+       
         [Route("api/admin/BankAccount/BlockAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage BlockAcc(int id)
@@ -132,7 +162,7 @@ namespace EkSheba.Controllers
 
         }
 
-        [AdminFilter]
+        
         [Route("api/admin/BankAccount/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage DeleteBankacc(int id)
@@ -143,7 +173,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [AdminFilter]
+        
         [Route("api/admin/BankAccount/genratetoken")]
         [HttpGet]
         public HttpResponseMessage GenrateRechargeToken()

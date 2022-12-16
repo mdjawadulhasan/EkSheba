@@ -7,8 +7,8 @@
       <Diagram DiagramId="49aa6b13a24e458ab2680c708e4f66b8" Name="Diagram1">
         <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.RechargeHistory" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.RechargeToken" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.RechargeToken" Width="1.5" PointX="0.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="2.5" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.UsersDetail" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
         <AssociationConnector Association="EkShebaModel.FK_Accounts_Users" ManuallyRouted="false" />

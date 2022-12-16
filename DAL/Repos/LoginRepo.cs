@@ -25,7 +25,7 @@ namespace DAL.Repos
 
         public List<User> Get()
         {
-            throw new NotImplementedException();
+            return db.Users.ToList();
         }
 
         public User Get(int id)
