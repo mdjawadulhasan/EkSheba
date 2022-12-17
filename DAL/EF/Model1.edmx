@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EkShebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="Id" />
@@ -76,6 +76,16 @@
           <Property Name="Token" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxPaymentHistories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IH_FK_TxID" Type="int" />
+          <Property Name="IH_FK_NID" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Amount" Type="int" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -183,6 +193,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaxPaymentHistoris_IncomeTax">
+          <End Role="IncomeTax" Type="Self.IncomeTax" Multiplicity="0..1" />
+          <End Role="TaxPaymentHistories" Type="Self.TaxPaymentHistories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncomeTax">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxPaymentHistories">
+              <PropertyRef Name="IH_FK_TxID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxPaymentHistoris_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <End Role="TaxPaymentHistories" Type="Self.TaxPaymentHistories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="TaxPaymentHistories">
+              <PropertyRef Name="IH_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersDetails_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="*" />
@@ -203,6 +237,7 @@
           <EntitySet Name="Passportapplications" EntityType="Self.Passportapplications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeToken" EntityType="Self.RechargeToken" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxPaymentHistories" EntityType="Self.TaxPaymentHistories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersDetails" EntityType="Self.UsersDetails" Schema="dbo" store:Type="Tables" />
@@ -230,13 +265,20 @@
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="RechargeHistories" EntitySet="RechargeHistories" />
           </AssociationSet>
+          <AssociationSet Name="FK_TaxPaymentHistoris_IncomeTax" Association="Self.FK_TaxPaymentHistoris_IncomeTax">
+            <End Role="IncomeTax" EntitySet="IncomeTax" />
+            <End Role="TaxPaymentHistories" EntitySet="TaxPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxPaymentHistoris_UsersDetails" Association="Self.FK_TaxPaymentHistoris_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="TaxPaymentHistories" EntitySet="TaxPaymentHistories" />
+          </AssociationSet>
           <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersDetails" EntitySet="UsersDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EkShebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -276,6 +318,7 @@
           <Property Name="Balance" Type="Int32" />
           <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UsersDetail" Relationship="Self.FK_IncomeTax_UsersDetails" FromRole="IncomeTax" ToRole="UsersDetails" />
+          <NavigationProperty Name="TaxPaymentHistories" Relationship="EkShebaModel.FK_TaxPaymentHistoris_IncomeTax" FromRole="IncomeTax" ToRole="TaxPaymentHistory" />
         </EntityType>
         <EntityType Name="Passport">
           <Key>
@@ -359,6 +402,7 @@
           <NavigationProperty Name="Passportapplications" Relationship="Self.FK_Passportapplications_UsersDetails" FromRole="UsersDetails" ToRole="Passportapplications" />
           <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="UsersDetails" ToRole="RechargeHistories" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersDetails_Users" FromRole="UsersDetails" ToRole="Users" />
+          <NavigationProperty Name="TaxPaymentHistories" Relationship="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails" FromRole="UsersDetail" ToRole="TaxPaymentHistory" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
           <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
@@ -483,7 +527,52 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersDetails" EntitySet="UsersDetails" />
           </AssociationSet>
+          <EntitySet Name="TaxPaymentHistories" EntityType="EkShebaModel.TaxPaymentHistory" />
+          <AssociationSet Name="FK_TaxPaymentHistoris_IncomeTax" Association="EkShebaModel.FK_TaxPaymentHistoris_IncomeTax">
+            <End Role="IncomeTax" EntitySet="IncomeTaxes" />
+            <End Role="TaxPaymentHistory" EntitySet="TaxPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxPaymentHistoris_UsersDetails" Association="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails">
+            <End Role="UsersDetail" EntitySet="UsersDetails" />
+            <End Role="TaxPaymentHistory" EntitySet="TaxPaymentHistories" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TaxPaymentHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IH_FK_TxID" Type="Int32" />
+          <Property Name="IH_FK_NID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Int32" />
+          <NavigationProperty Name="IncomeTax" Relationship="EkShebaModel.FK_TaxPaymentHistoris_IncomeTax" FromRole="TaxPaymentHistory" ToRole="IncomeTax" />
+          <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails" FromRole="TaxPaymentHistory" ToRole="UsersDetail" />
+        </EntityType>
+        <Association Name="FK_TaxPaymentHistoris_IncomeTax">
+          <End Type="EkShebaModel.IncomeTax" Role="IncomeTax" Multiplicity="0..1" />
+          <End Type="EkShebaModel.TaxPaymentHistory" Role="TaxPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncomeTax">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxPaymentHistory">
+              <PropertyRef Name="IH_FK_TxID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxPaymentHistoris_UsersDetails">
+          <End Type="EkShebaModel.UsersDetail" Role="UsersDetail" Multiplicity="0..1" />
+          <End Type="EkShebaModel.TaxPaymentHistory" Role="TaxPaymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="TaxPaymentHistory">
+              <PropertyRef Name="IH_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -603,6 +692,17 @@
                 <ScalarProperty Name="MotherName" ColumnName="MotherName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="FK_Uid" ColumnName="FK_Uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxPaymentHistories">
+            <EntityTypeMapping TypeName="EkShebaModel.TaxPaymentHistory">
+              <MappingFragment StoreEntitySet="TaxPaymentHistories">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IH_FK_NID" ColumnName="IH_FK_NID" />
+                <ScalarProperty Name="IH_FK_TxID" ColumnName="IH_FK_TxID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

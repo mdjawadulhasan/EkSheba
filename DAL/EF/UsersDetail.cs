@@ -23,6 +23,7 @@ namespace DAL.EF
             this.Passports = new HashSet<Passport>();
             this.Passportapplications = new HashSet<Passportapplication>();
             this.RechargeHistories = new HashSet<RechargeHistory>();
+            this.TaxPaymentHistories = new HashSet<TaxPaymentHistory>();
         }
     
         public int Nid { get; set; }
@@ -49,5 +50,7 @@ namespace DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RechargeHistory> RechargeHistories { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaxPaymentHistory> TaxPaymentHistories { get; set; }
     }
 }

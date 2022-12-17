@@ -118,5 +118,16 @@ namespace BLL.Services
             DataAccessFactory.AccountDataAccess().Update(acc);
 
         }
+
+
+        public static void ChargeAmount(int id, int amount)
+        {
+            var acc = DataAccessFactory.AccountDataAccess().GetbyFK(id);
+            int balance = (int)acc.Balance;
+            balance = balance - amount;
+            acc.Balance = balance;
+            DataAccessFactory.AccountDataAccess().Update(acc);
+
+        }
     }
 }

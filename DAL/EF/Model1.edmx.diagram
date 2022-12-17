@@ -22,6 +22,9 @@
         <AssociationConnector Association="EkShebaModel.FK_Passportapplications_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_RechargeHistories_RechargeHistories" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_UsersDetails_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EkShebaModel.TaxPaymentHistory" Width="1.5" PointX="7.5" PointY="9.25" />
+        <AssociationConnector Association="EkShebaModel.FK_TaxPaymentHistoris_IncomeTax" />
+        <AssociationConnector Association="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

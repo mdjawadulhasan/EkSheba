@@ -69,5 +69,25 @@ namespace BLL.Services
             var result = DataAccessFactory.TaxDataAccess().Update(incometax);
             return result;
         }
+
+
+        public static bool PayTax(TaxDTO dto)
+        {
+
+            var incometax = DataAccessFactory.TaxDataAccess().Get(dto.Id);
+            incometax.Paid = incometax.Paid + dto.Paid;
+            incometax.Balance = incometax.TaxAmount - incometax.Paid;
+            var result = DataAccessFactory.TaxDataAccess().Update(incometax);
+
+
+            TaxPaymentHistoryDTO tdto = new TaxPaymentHistoryDTO();
+            tdto.IH_FK_NID = dto.IN_FK_NID;
+            tdto.IH_FK_TxID = dto.Id;
+            tdto.Date = DateTime.Now;
+            tdto.Amount = dto.Paid;
+
+            result = TaxPaymentHistoryService.Add(tdto);
+            return result;
+        }
     }
 }

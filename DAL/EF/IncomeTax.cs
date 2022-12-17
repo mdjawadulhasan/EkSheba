@@ -14,6 +14,12 @@ namespace DAL.EF
     
     public partial class IncomeTax
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public IncomeTax()
+        {
+            this.TaxPaymentHistories = new HashSet<TaxPaymentHistory>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> IN_FK_NID { get; set; }
         public Nullable<int> TaxAmount { get; set; }
@@ -22,5 +28,7 @@ namespace DAL.EF
         public string Year { get; set; }
     
         public virtual UsersDetail UsersDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaxPaymentHistory> TaxPaymentHistories { get; set; }
     }
 }

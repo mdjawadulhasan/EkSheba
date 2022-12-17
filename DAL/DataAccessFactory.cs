@@ -66,7 +66,10 @@ namespace DAL
             return new TaxRepo();
         }
 
-
+        public static IRepo<TaxPaymentHistory, int> TaxPaymentHistoryDataAccess()
+        {
+            return new TaxPaymentHistoryRepo();
+        }
 
 
     }

@@ -12,9 +12,10 @@ using System.Web.Http.Controllers;
 
 namespace EkSheba.Controllers
 {
+    [UserFilter]
     public class UserController : ApiController
     {
-        [UserFilter]
+
         [Route("api/login/update")]
         [HttpPost]
         public HttpResponseMessage Update(LoginDTO user)
@@ -70,7 +71,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [UserFilter]
+
         [Route("api/users/update")]
         [HttpPost]
         public HttpResponseMessage Update(UsersDetailDTO user)
@@ -91,7 +92,6 @@ namespace EkSheba.Controllers
 
         }
 
-        [UserFilter]
         [Route("api/users/bank/reqaccount")]
         [HttpPost]
         public HttpResponseMessage AddAccount()
@@ -112,7 +112,7 @@ namespace EkSheba.Controllers
 
 
 
-        [UserFilter]
+
         [Route("api/users/bank/Recharge")]
         [HttpPost]
         public HttpResponseMessage Recharge(RechargeTokenDTO dto)
@@ -142,7 +142,7 @@ namespace EkSheba.Controllers
 
 
 
-        [UserFilter]
+
         [Route("api/users/passport/apply/{type}")]
         [HttpGet]
         public HttpResponseMessage PassportApply(int type)
@@ -158,18 +158,18 @@ namespace EkSheba.Controllers
 
             if (ExistsApp != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application Pending Already"});
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application Pending Already" });
             }
             else
             {
-                if((type == 1 && balance < 10000) || (type == 2 && balance<7000) || (type == 3 && balance < 5000))
+                if ((type == 1 && balance < 10000) || (type == 2 && balance < 7000) || (type == 3 && balance < 5000))
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient Balance" });
                 }
                 else
                 {
-                    AccountService.ChargeForPassport(user.Nid,type);
-                    bool res=PassportAppService.Add(user.Nid,type);
+                    AccountService.ChargeForPassport(user.Nid, type);
+                    bool res = PassportAppService.Add(user.Nid, type);
                     if (res)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application submitted" });
@@ -179,7 +179,7 @@ namespace EkSheba.Controllers
                         return Request.CreateResponse(HttpStatusCode.InternalServerError);
                     }
                 }
-                
+
             }
 
 
@@ -189,7 +189,7 @@ namespace EkSheba.Controllers
 
 
 
-        [UserFilter]
+
         [Route("api/users/Tax/addincome/")]
         [HttpPost]
         public HttpResponseMessage AddIncome(FiscalYIncomeDTO dto)
@@ -225,7 +225,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [UserFilter]
+
         [Route("api/users/Tax/updateincome/")]
         [HttpPost]
         public HttpResponseMessage UpdateIncome(FiscalYIncomeDTO dto)
@@ -261,12 +261,46 @@ namespace EkSheba.Controllers
         }
 
 
+        [UserFilter]
+        [Route("api/users/Tax/PayTax/")]
+        [HttpPost]
+        public HttpResponseMessage PayTax(TaxDTO dto)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
+            int balance = AccountService.CurentBalance(user.Nid);
+            int amounttopay = (int)dto.Paid;
+
+
+            if (balance >= dto.Paid)
+            {
+                AccountService.ChargeAmount(user.Nid, amounttopay);
+                bool resp = TaxService.PayTax(dto);
+                if (resp)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Tax Paid" });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient balance ! Please Recharge" });
+            }
 
 
 
+          
+
+        }
     }
-
 }
+
 
 
 
