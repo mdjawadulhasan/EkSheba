@@ -34,7 +34,7 @@ namespace BLL.Services
 
             else
             {
-               
+
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<FiscalYIncomeDTO, FiscalYIncome>());
                 var mapper = new Mapper(config);
                 var data = mapper.Map<FiscalYIncome>(dto);
@@ -47,9 +47,29 @@ namespace BLL.Services
         }
 
 
+        public static bool Update(FiscalYIncomeDTO dto)
+        {
+            DateTime now = DateTime.Today;
+            string currentyear = now.ToString("yyyy");
+            if (currentyear.Equals(dto.Year))
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<FiscalYIncomeDTO, FiscalYIncome>());
+                var mapper = new Mapper(config);
+                var data = mapper.Map<FiscalYIncome>(dto);
+                var result = DataAccessFactory.FiscalYIncomeDataAccess().Update(data);
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         public static int CalculatedTax(FiscalYIncomeDTO dto)
         {
-            
+
             int maxHouseRent = (int)(dto.BasicSalary / 2);
             int maxMedicalAllowance = (int)(dto.BasicSalary * 10) / 100;
             int maxConveyance = 30000;
@@ -76,11 +96,11 @@ namespace BLL.Services
 
 
             int GrossTaxable = 0;
-            if(TotalTaxableAmount>=300000 && TotalTaxableAmount<400000)
+            if (TotalTaxableAmount >= 300000 && TotalTaxableAmount < 400000)
             {
                 GrossTaxable = (TotalTaxableAmount * 5) / 100;
             }
-            else if (TotalTaxableAmount >= 400000 && TotalTaxableAmount <700000)
+            else if (TotalTaxableAmount >= 400000 && TotalTaxableAmount < 700000)
             {
                 GrossTaxable = (TotalTaxableAmount * 10) / 100;
             }
@@ -92,7 +112,7 @@ namespace BLL.Services
             {
                 GrossTaxable = (TotalTaxableAmount * 20) / 100;
             }
-            else if (TotalTaxableAmount >= 1600000 )
+            else if (TotalTaxableAmount >= 1600000)
             {
                 GrossTaxable = (TotalTaxableAmount * 25) / 100;
             }

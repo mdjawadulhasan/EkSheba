@@ -59,5 +59,15 @@ namespace BLL.Services
             var result = DataAccessFactory.TaxDataAccess().Add(it);
             return result;
         }
+
+        public static bool Update(int Grossamount, int id)
+        {
+
+            var incometax = DataAccessFactory.TaxDataAccess().GetbyFK(id);
+            incometax.TaxAmount = Grossamount;
+            incometax.Balance = incometax.TaxAmount - incometax.Paid;
+            var result = DataAccessFactory.TaxDataAccess().Update(incometax);
+            return result;
+        }
     }
 }

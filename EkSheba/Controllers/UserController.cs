@@ -225,6 +225,42 @@ namespace EkSheba.Controllers
         }
 
 
+        [UserFilter]
+        [Route("api/users/Tax/updateincome/")]
+        [HttpPost]
+        public HttpResponseMessage UpdateIncome(FiscalYIncomeDTO dto)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
+
+
+            bool resp = FiscalYIncomeService.Update(dto);
+
+            if (!resp)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "You can't Update Previous Years Data !" });
+            }
+            else
+            {
+                int GrossTaxable = FiscalYIncomeService.CalculatedTax(dto);
+                bool resp2 = TaxService.Update(GrossTaxable, user.Nid);
+                if (resp2)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Income Data Updated ! Please Pay the Tax" });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                }
+
+            }
+
+
+        }
+
+
 
 
 
