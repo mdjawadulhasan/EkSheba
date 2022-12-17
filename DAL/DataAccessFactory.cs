@@ -61,6 +61,11 @@ namespace DAL
             return new FiscalYIncomeRepo();
         }
 
+        public static IRepo<IncomeTax, int> TaxDataAccess()
+        {
+            return new TaxRepo();
+        }
+
 
 
 

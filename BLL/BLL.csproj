@@ -52,6 +52,7 @@
     <Compile Include="DTOs\PassportDTO.cs" />
     <Compile Include="DTOs\RechargeHistoryDTO.cs" />
     <Compile Include="DTOs\RechargeTokenDTO.cs" />
+    <Compile Include="DTOs\TaxDTO.cs" />
     <Compile Include="DTOs\TokenDTO.cs" />
     <Compile Include="DTOs\UsersDetailDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Services\PassportService.cs" />
     <Compile Include="Services\RechargeHistoryService.cs" />
     <Compile Include="Services\RechargeTokenService.cs" />
+    <Compile Include="Services\TaxService.cs" />
     <Compile Include="Services\UserDetailService.cs" />
   </ItemGroup>
   <ItemGroup>

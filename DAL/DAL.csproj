@@ -108,6 +108,7 @@
     <Compile Include="Repos\RechargeHistoryRepo.cs" />
     <Compile Include="Repos\RechargeTokenRepo.cs" />
     <Compile Include="Repos\Repo.cs" />
+    <Compile Include="Repos\TaxRepo.cs" />
     <Compile Include="Repos\TokenRepo.cs" />
     <Compile Include="Repos\UserDetailsRepo.cs" />
   </ItemGroup>

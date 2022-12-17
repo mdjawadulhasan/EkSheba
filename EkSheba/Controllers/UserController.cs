@@ -189,6 +189,44 @@ namespace EkSheba.Controllers
 
 
 
+        [UserFilter]
+        [Route("api/users/Tax/addincome/")]
+        [HttpPost]
+        public HttpResponseMessage AddIncome(FiscalYIncomeDTO dto)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
+
+
+            bool resp = FiscalYIncomeService.Add(dto, user.Nid);
+
+            if (!resp)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Income Data Already Exist for current Year" });
+            }
+            else
+            {
+                int GrossTaxable = FiscalYIncomeService.CalculatedTax(dto);
+                bool resp2 = TaxService.Add(GrossTaxable, user.Nid);
+                if (resp2)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Income Data Added ! Please Pay the Tax" });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                }
+
+            }
+
+
+        }
+
+
+
+
 
     }
 

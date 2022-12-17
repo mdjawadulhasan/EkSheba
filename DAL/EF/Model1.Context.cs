@@ -26,6 +26,8 @@ namespace DAL.EF
         }
     
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<FiscalYIncome> FiscalYIncomes { get; set; }
+        public virtual DbSet<IncomeTax> IncomeTaxes { get; set; }
         public virtual DbSet<Passport> Passports { get; set; }
         public virtual DbSet<Passportapplication> Passportapplications { get; set; }
         public virtual DbSet<RechargeHistory> RechargeHistories { get; set; }
@@ -33,7 +35,5 @@ namespace DAL.EF
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersDetail> UsersDetails { get; set; }
-        public virtual DbSet<FiscalYIncome> FiscalYIncomes { get; set; }
-        public virtual DbSet<IncomeTax> IncomeTaxes { get; set; }
     }
 }

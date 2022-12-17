@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    class FiscalYIncomeService
+    public class FiscalYIncomeService
     {
         public static FiscalYIncomeDTO Get(int id)
         {
@@ -34,6 +34,7 @@ namespace BLL.Services
 
             else
             {
+               
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<FiscalYIncomeDTO, FiscalYIncome>());
                 var mapper = new Mapper(config);
                 var data = mapper.Map<FiscalYIncome>(dto);
@@ -42,6 +43,62 @@ namespace BLL.Services
                 var result = DataAccessFactory.FiscalYIncomeDataAccess().Add(data);
                 return result;
             }
+
+        }
+
+
+        public static int CalculatedTax(FiscalYIncomeDTO dto)
+        {
+            
+            int maxHouseRent = (int)(dto.BasicSalary / 2);
+            int maxMedicalAllowance = (int)(dto.BasicSalary * 10) / 100;
+            int maxConveyance = 30000;
+
+
+            int TaxableHouseRent = 0;
+            int TaxableMeicalAl = 0;
+            int TaxableConveyance = 0;
+
+            if (dto.HouseRent > maxHouseRent)
+            {
+                TaxableHouseRent = (int)(dto.HouseRent - TaxableHouseRent);
+            }
+            if (dto.MedicalAllowancw > maxMedicalAllowance)
+            {
+                TaxableMeicalAl = (int)(dto.MedicalAllowancw - maxMedicalAllowance);
+            }
+            if (dto.Conveyance > maxConveyance)
+            {
+                TaxableConveyance = (int)(dto.Conveyance - maxConveyance);
+            }
+
+            int TotalTaxableAmount = (int)(dto.BasicSalary + TaxableHouseRent + TaxableMeicalAl + TaxableConveyance + dto.Incentive + dto.FestivalBonus);
+
+
+            int GrossTaxable = 0;
+            if(TotalTaxableAmount>=300000 && TotalTaxableAmount<400000)
+            {
+                GrossTaxable = (TotalTaxableAmount * 5) / 100;
+            }
+            else if (TotalTaxableAmount >= 400000 && TotalTaxableAmount <700000)
+            {
+                GrossTaxable = (TotalTaxableAmount * 10) / 100;
+            }
+            else if (TotalTaxableAmount >= 700000 && TotalTaxableAmount < 1100000)
+            {
+                GrossTaxable = (TotalTaxableAmount * 15) / 100;
+            }
+            else if (TotalTaxableAmount >= 1100000 && TotalTaxableAmount < 1600000)
+            {
+                GrossTaxable = (TotalTaxableAmount * 20) / 100;
+            }
+            else if (TotalTaxableAmount >= 1600000 )
+            {
+                GrossTaxable = (TotalTaxableAmount * 25) / 100;
+            }
+
+
+            return GrossTaxable;
         }
     }
 }

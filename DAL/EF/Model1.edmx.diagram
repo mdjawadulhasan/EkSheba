@@ -4,24 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2f59c51e33f04fbbaa2af7c45bdbbd7a" Name="Diagram1">
-        <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.Passport" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.Passportapplication" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.RechargeHistory" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+      <Diagram DiagramId="3eadc9c3cd7942298b8b90b425c50377" Name="Diagram1">
+        <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.FiscalYIncome" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.IncomeTax" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Passport" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Passportapplication" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.RechargeHistory" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.RechargeToken" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.User" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EkShebaModel.UsersDetail" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.Token" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.User" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkShebaModel.UsersDetail" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <AssociationConnector Association="EkShebaModel.FK_Accounts_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="EkShebaModel.FK_FiscalYIncome_UsersDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="EkShebaModel.FK_IncomeTax_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_Passport_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_Passportapplications_UsersDetails" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_RechargeHistories_RechargeHistories" ManuallyRouted="false" />
         <AssociationConnector Association="EkShebaModel.FK_UsersDetails_Users" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EkShebaModel.FiscalYIncome" Width="1.5" PointX="5.25" PointY="12.75" />
-        <EntityTypeShape EntityType="EkShebaModel.IncomeTax" Width="1.5" PointX="5.25" PointY="16.375" />
-        <AssociationConnector Association="EkShebaModel.FK_FiscalYIncome_UsersDetails" />
-        <AssociationConnector Association="EkShebaModel.FK_IncomeTax_UsersDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
