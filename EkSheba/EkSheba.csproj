@@ -147,7 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Auth\AccountsAdmin.cs" />
     <Compile Include="Auth\AdminFilter.cs" />
+    <Compile Include="Auth\EducationAdmin.cs" />
+    <Compile Include="Auth\PassportAdmin.cs" />
     <Compile Include="Auth\UserFilter.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />

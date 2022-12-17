@@ -107,7 +107,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [AccountsAdmin]
         [Route("api/admin/BankAccount/accounts")]
         [HttpGet]
         public HttpResponseMessage GetAccounts()
@@ -120,7 +120,7 @@ namespace EkSheba.Controllers
 
 
 
-
+        [AccountsAdmin]
         [Route("api/admin/BankAccount/AcceptAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage AcceptAcc(int id)
@@ -141,7 +141,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [AccountsAdmin]
         [Route("api/admin/BankAccount/BlockAccount/{id}")]
         [HttpGet]
         public HttpResponseMessage BlockAcc(int id)
@@ -162,7 +162,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [AccountsAdmin]
         [Route("api/admin/BankAccount/delete/{id}")]
         [HttpGet]
         public HttpResponseMessage DeleteBankacc(int id)
@@ -173,7 +173,7 @@ namespace EkSheba.Controllers
         }
 
 
-
+        [AccountsAdmin]
         [Route("api/admin/BankAccount/genratetoken")]
         [HttpGet]
         public HttpResponseMessage GenrateRechargeToken()
@@ -183,7 +183,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [PassportAdmin]
         [Route("api/admin/passport/applications")]
         [HttpGet]
         public HttpResponseMessage GetPassportapplications()
@@ -193,6 +193,7 @@ namespace EkSheba.Controllers
 
         }
 
+        [PassportAdmin]
         [Route("api/admin/passports")]
         [HttpGet]
         public HttpResponseMessage GetPassports()
@@ -202,7 +203,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [PassportAdmin]
         [Route("api/admin/passport/Accept/{id}")]
         [HttpGet]
         public HttpResponseMessage AcceptPassport(int id)
@@ -220,7 +221,7 @@ namespace EkSheba.Controllers
 
         }
 
-
+        [PassportAdmin]
         [Route("api/admin/passport/Block/{id}")]
         [HttpGet]
         public HttpResponseMessage BlockPassport(int id)
