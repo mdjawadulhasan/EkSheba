@@ -77,6 +77,11 @@ namespace DAL
             return new UserAcademicInfoRepo();
         }
 
+        public static IRepo<JobCircular, int> JobCircularDataAccess()
+        {
+            return new JobCirculerRepo();
+        }
+
 
     }
 }

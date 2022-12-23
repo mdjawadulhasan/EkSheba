@@ -281,5 +281,72 @@ namespace EkSheba.Controllers
 
         }
 
+
+
+        //-----------------------
+        //[EducationAdmin]
+        [Route("api/job/add")]
+        [HttpPost]
+        public HttpResponseMessage JobPost(JobCirculerDTO dto)
+        {
+
+            var resp = JobCirculerService.Add(dto);
+            if (resp != false)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+            }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+        // [EducationAdmin]
+        [Route("api/job/update")]
+        [HttpPost]
+        public HttpResponseMessage UpdateJob(JobCirculerDTO dto)
+        {
+
+            var resp = JobCirculerService.Update(dto);
+            if (resp != false)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+            }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+        // [EducationAdmin]
+        [Route("api/job")]
+        [HttpGet]
+        public HttpResponseMessage ViewJObs()
+        {
+
+            var data = JobCirculerService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+
+        [Route("api/job/{id}")]
+        [HttpGet]
+        public HttpResponseMessage ViewJOb(int id)
+        {
+
+            var data = JobCirculerService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+
+        [Route("api/job/delete/{id}")]
+        [HttpGet]
+        public HttpResponseMessage Deletejob(int id)
+        {
+            var data = JobCirculerService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
     }
 }
