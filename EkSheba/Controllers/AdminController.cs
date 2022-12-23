@@ -238,5 +238,48 @@ namespace EkSheba.Controllers
 
         }
 
+        //[EducationAdmin]
+        [Route("api/user/academicinfo/add")]
+        [HttpPost]
+        public HttpResponseMessage Post(UserAcademicInfoDTO dto)
+        {
+
+            var resp = UserAcademicInfoService.Add(dto);
+            if (resp != false)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+            }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+       // [EducationAdmin]
+        [Route("api/user/academicinfo/update")]
+        [HttpPost]
+        public HttpResponseMessage Updateacademic(UserAcademicInfoDTO dto)
+        {
+
+            var resp = UserAcademicInfoService.Update(dto);
+            if (resp != false)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+            }
+            return Request.CreateResponse(HttpStatusCode.InternalServerError);
+
+        }
+
+
+       // [EducationAdmin]
+        [Route("api/user/academicinfo/{id}")]
+        [HttpGet]
+        public HttpResponseMessage Viewacademic(int id)
+        {
+
+            var data = UserAcademicInfoService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
     }
 }

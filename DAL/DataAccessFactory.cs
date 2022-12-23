@@ -72,5 +72,11 @@ namespace DAL
         }
 
 
+        public static IRepo<UserAcademicInfo, int> UserAcademicInfoDataAccess()
+        {
+            return new UserAcademicInfoRepo();
+        }
+
+
     }
 }

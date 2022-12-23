@@ -36,5 +36,8 @@ namespace DAL.EF
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersDetail> UsersDetails { get; set; }
         public virtual DbSet<TaxPaymentHistory> TaxPaymentHistories { get; set; }
+        public virtual DbSet<JobApply> JobApplies { get; set; }
+        public virtual DbSet<JobCircular> JobCirculars { get; set; }
+        public virtual DbSet<UserAcademicInfo> UserAcademicInfoes { get; set; }
     }
 }

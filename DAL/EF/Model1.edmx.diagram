@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3eadc9c3cd7942298b8b90b425c50377" Name="Diagram1">
+      <Diagram DiagramId="3eadc9c3cd7942298b8b90b425c50377" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="EkShebaModel.Account" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.FiscalYIncome" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EkShebaModel.IncomeTax" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
@@ -25,6 +25,11 @@
         <EntityTypeShape EntityType="EkShebaModel.TaxPaymentHistory" Width="1.5" PointX="7.5" PointY="9.25" />
         <AssociationConnector Association="EkShebaModel.FK_TaxPaymentHistoris_IncomeTax" />
         <AssociationConnector Association="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails" />
+        <EntityTypeShape EntityType="EkShebaModel.JobApply" Width="1.5" PointX="5.25" PointY="20.75" />
+        <EntityTypeShape EntityType="EkShebaModel.JobCircular" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EkShebaModel.UserAcademicInfo" Width="1.5" PointX="5.25" PointY="23.5" />
+        <AssociationConnector Association="EkShebaModel.FK_JobApply_UsersDetails" />
+        <AssociationConnector Association="EkShebaModel.FK_UserAcademicInfo_UsersDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

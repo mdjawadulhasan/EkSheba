@@ -39,6 +39,27 @@
           <Property Name="Balance" Type="int" />
           <Property Name="Year" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="JobApply">
+          <Key>
+            <PropertyRef Name="JApid" />
+          </Key>
+          <Property Name="JApid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JAp_FK_NID" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="ApplicantName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="JobCircular">
+          <Key>
+            <PropertyRef Name="JCid" />
+          </Key>
+          <Property Name="JCid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="QualificationLevel" Type="varchar" MaxLength="50" />
+          <Property Name="Minresult" Type="varchar" MaxLength="50" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="Agereq" Type="int" />
+        </EntityType>
         <EntityType Name="Passport">
           <Key>
             <PropertyRef Name="Id" />
@@ -97,6 +118,21 @@
           <Property Name="ExpirationTime" Type="datetime" />
           <Property Name="Username" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="UserAcademicInfo">
+          <Key>
+            <PropertyRef Name="RId" />
+          </Key>
+          <Property Name="RId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PSC" Type="varchar" MaxLength="50" />
+          <Property Name="PSC_res" Type="varchar" MaxLength="50" />
+          <Property Name="JSC" Type="varchar" MaxLength="50" />
+          <Property Name="JSC_res" Type="varchar" MaxLength="50" />
+          <Property Name="SSC" Type="varchar" MaxLength="50" />
+          <Property Name="SSC_res" Type="varchar" MaxLength="50" />
+          <Property Name="HSC" Type="varchar" MaxLength="50" />
+          <Property Name="HSC_res" Type="varchar" MaxLength="50" />
+          <Property Name="R_FK_NID" Type="int" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -154,6 +190,18 @@
             </Principal>
             <Dependent Role="IncomeTax">
               <PropertyRef Name="IN_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApply_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <End Role="JobApply" Type="Self.JobApply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="JobApply">
+              <PropertyRef Name="JAp_FK_NID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -217,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAcademicInfo_UsersDetails">
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <End Role="UserAcademicInfo" Type="Self.UserAcademicInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetails">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="UserAcademicInfo">
+              <PropertyRef Name="R_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersDetails_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="*" />
@@ -233,12 +293,15 @@
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FiscalYIncome" EntityType="Self.FiscalYIncome" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncomeTax" EntityType="Self.IncomeTax" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobApply" EntityType="Self.JobApply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobCircular" EntityType="Self.JobCircular" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Passportapplications" EntityType="Self.Passportapplications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeHistories" EntityType="Self.RechargeHistories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RechargeToken" EntityType="Self.RechargeToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaxPaymentHistories" EntityType="Self.TaxPaymentHistories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAcademicInfo" EntityType="Self.UserAcademicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersDetails" EntityType="Self.UsersDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Accounts_Users" Association="Self.FK_Accounts_Users">
@@ -252,6 +315,10 @@
           <AssociationSet Name="FK_IncomeTax_UsersDetails" Association="Self.FK_IncomeTax_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="IncomeTax" EntitySet="IncomeTax" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApply_UsersDetails" Association="Self.FK_JobApply_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="JobApply" EntitySet="JobApply" />
           </AssociationSet>
           <AssociationSet Name="FK_Passport_UsersDetails" Association="Self.FK_Passport_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
@@ -272,6 +339,10 @@
           <AssociationSet Name="FK_TaxPaymentHistoris_UsersDetails" Association="Self.FK_TaxPaymentHistoris_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="TaxPaymentHistories" EntitySet="TaxPaymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAcademicInfo_UsersDetails" Association="Self.FK_UserAcademicInfo_UsersDetails">
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+            <End Role="UserAcademicInfo" EntitySet="UserAcademicInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersDetails_Users" Association="Self.FK_UsersDetails_Users">
             <End Role="Users" EntitySet="Users" />
@@ -403,6 +474,8 @@
           <NavigationProperty Name="RechargeHistories" Relationship="Self.FK_RechargeHistories_RechargeHistories" FromRole="UsersDetails" ToRole="RechargeHistories" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersDetails_Users" FromRole="UsersDetails" ToRole="Users" />
           <NavigationProperty Name="TaxPaymentHistories" Relationship="EkShebaModel.FK_TaxPaymentHistoris_UsersDetails" FromRole="UsersDetail" ToRole="TaxPaymentHistory" />
+          <NavigationProperty Name="JobApplies" Relationship="EkShebaModel.FK_JobApply_UsersDetails" FromRole="UsersDetail" ToRole="JobApply" />
+          <NavigationProperty Name="UserAcademicInfoes" Relationship="EkShebaModel.FK_UserAcademicInfo_UsersDetails" FromRole="UsersDetail" ToRole="UserAcademicInfo" />
         </EntityType>
         <Association Name="FK_Accounts_Users">
           <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
@@ -536,6 +609,17 @@
             <End Role="UsersDetail" EntitySet="UsersDetails" />
             <End Role="TaxPaymentHistory" EntitySet="TaxPaymentHistories" />
           </AssociationSet>
+          <EntitySet Name="JobApplies" EntityType="EkShebaModel.JobApply" />
+          <EntitySet Name="JobCirculars" EntityType="EkShebaModel.JobCircular" />
+          <EntitySet Name="UserAcademicInfoes" EntityType="EkShebaModel.UserAcademicInfo" />
+          <AssociationSet Name="FK_JobApply_UsersDetails" Association="EkShebaModel.FK_JobApply_UsersDetails">
+            <End Role="UsersDetail" EntitySet="UsersDetails" />
+            <End Role="JobApply" EntitySet="JobApplies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAcademicInfo_UsersDetails" Association="EkShebaModel.FK_UserAcademicInfo_UsersDetails">
+            <End Role="UsersDetail" EntitySet="UsersDetails" />
+            <End Role="UserAcademicInfo" EntitySet="UserAcademicInfoes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TaxPaymentHistory">
           <Key>
@@ -570,6 +654,68 @@
             </Principal>
             <Dependent Role="TaxPaymentHistory">
               <PropertyRef Name="IH_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="JobApply">
+          <Key>
+            <PropertyRef Name="JApid" />
+          </Key>
+          <Property Name="JApid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JAp_FK_NID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="ApplicantName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_JobApply_UsersDetails" FromRole="JobApply" ToRole="UsersDetail" />
+        </EntityType>
+        <EntityType Name="JobCircular">
+          <Key>
+            <PropertyRef Name="JCid" />
+          </Key>
+          <Property Name="JCid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="QualificationLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Minresult" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agereq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserAcademicInfo">
+          <Key>
+            <PropertyRef Name="RId" />
+          </Key>
+          <Property Name="RId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PSC_res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JSC_res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SSC_res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HSC_res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="R_FK_NID" Type="Int32" />
+          <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_UserAcademicInfo_UsersDetails" FromRole="UserAcademicInfo" ToRole="UsersDetail" />
+        </EntityType>
+        <Association Name="FK_JobApply_UsersDetails">
+          <End Type="EkShebaModel.UsersDetail" Role="UsersDetail" Multiplicity="0..1" />
+          <End Type="EkShebaModel.JobApply" Role="JobApply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="JobApply">
+              <PropertyRef Name="JAp_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAcademicInfo_UsersDetails">
+          <End Type="EkShebaModel.UsersDetail" Role="UsersDetail" Multiplicity="0..1" />
+          <End Type="EkShebaModel.UserAcademicInfo" Role="UserAcademicInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="Nid" />
+            </Principal>
+            <Dependent Role="UserAcademicInfo">
+              <PropertyRef Name="R_FK_NID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -703,6 +849,45 @@
                 <ScalarProperty Name="IH_FK_NID" ColumnName="IH_FK_NID" />
                 <ScalarProperty Name="IH_FK_TxID" ColumnName="IH_FK_TxID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobApplies">
+            <EntityTypeMapping TypeName="EkShebaModel.JobApply">
+              <MappingFragment StoreEntitySet="JobApply">
+                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="JAp_FK_NID" ColumnName="JAp_FK_NID" />
+                <ScalarProperty Name="JApid" ColumnName="JApid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobCirculars">
+            <EntityTypeMapping TypeName="EkShebaModel.JobCircular">
+              <MappingFragment StoreEntitySet="JobCircular">
+                <ScalarProperty Name="Agereq" ColumnName="Agereq" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Minresult" ColumnName="Minresult" />
+                <ScalarProperty Name="QualificationLevel" ColumnName="QualificationLevel" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="JCid" ColumnName="JCid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAcademicInfoes">
+            <EntityTypeMapping TypeName="EkShebaModel.UserAcademicInfo">
+              <MappingFragment StoreEntitySet="UserAcademicInfo">
+                <ScalarProperty Name="R_FK_NID" ColumnName="R_FK_NID" />
+                <ScalarProperty Name="HSC_res" ColumnName="HSC_res" />
+                <ScalarProperty Name="HSC" ColumnName="HSC" />
+                <ScalarProperty Name="SSC_res" ColumnName="SSC_res" />
+                <ScalarProperty Name="SSC" ColumnName="SSC" />
+                <ScalarProperty Name="JSC_res" ColumnName="JSC_res" />
+                <ScalarProperty Name="JSC" ColumnName="JSC" />
+                <ScalarProperty Name="PSC_res" ColumnName="PSC_res" />
+                <ScalarProperty Name="PSC" ColumnName="PSC" />
+                <ScalarProperty Name="RId" ColumnName="RId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

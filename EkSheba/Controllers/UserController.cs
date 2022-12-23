@@ -261,7 +261,7 @@ namespace EkSheba.Controllers
         }
 
 
-        [UserFilter]
+       
         [Route("api/users/Tax/PayTax/")]
         [HttpPost]
         public HttpResponseMessage PayTax(TaxDTO dto)
@@ -292,10 +292,22 @@ namespace EkSheba.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient balance ! Please Recharge" });
             }
+    
+        }
 
 
+        
+        [Route("api/user/academicinfo")]
+        [HttpGet]
+        public HttpResponseMessage Viewacademic()
+        {
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
 
-          
+
+            var data = UserAcademicInfoService.Get(user.Nid);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
     }

@@ -60,6 +60,12 @@
     <Compile Include="EF\IncomeTax.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\JobApply.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\JobCircular.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,6 +102,9 @@
     <Compile Include="EF\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\UserAcademicInfo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\UsersDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -114,6 +123,7 @@
     <Compile Include="Repos\TaxPaymentHistoryRepo.cs" />
     <Compile Include="Repos\TaxRepo.cs" />
     <Compile Include="Repos\TokenRepo.cs" />
+    <Compile Include="Repos\UserAcademicInfoRepo.cs" />
     <Compile Include="Repos\UserDetailsRepo.cs" />
   </ItemGroup>
   <ItemGroup>
