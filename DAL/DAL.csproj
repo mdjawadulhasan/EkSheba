@@ -114,6 +114,7 @@
     <Compile Include="Interfaces\IAuth.cs" />
     <Compile Include="Repos\AccountRepo.cs" />
     <Compile Include="Repos\FiscalYIncomeRepo.cs" />
+    <Compile Include="Repos\JobApplicationsRepo.cs" />
     <Compile Include="Repos\JobCirculerRepo.cs" />
     <Compile Include="Repos\LoginRepo.cs" />
     <Compile Include="Repos\PassportAppRepo.cs" />

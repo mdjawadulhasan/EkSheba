@@ -154,6 +154,7 @@ namespace EkSheba.Controllers
 
 
             var ExistsApp = PassportAppService.GetbyFk(user.Nid);
+            //Need Update here. See whearher it is active or not.
             int balance = AccountService.CurentBalance(user.Nid);
 
             if (ExistsApp != null)
@@ -311,6 +312,49 @@ namespace EkSheba.Controllers
 
         }
 
+
+        //-Apply Job
+        [Route("api/jobapplication/apply/{id}")]
+        [HttpGet]
+        public HttpResponseMessage JobApply(int id)
+        {
+
+            var r = Request.Headers.Authorization;
+            string token = r.ToString();
+            var user = AuthService.GetCurrentUser(token);
+
+
+            var ExistsApp = JobApplyService.IsExistsApplication(id,user.Nid);
+            int balance = AccountService.CurentBalance(user.Nid);
+
+            if (ExistsApp != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application Exists Already" });
+            }
+            else
+            {
+                if (balance<500)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient Balance" });
+                }
+                else
+                {
+                    AccountService.ChargeAmount(user.Nid,500);
+                    bool res = JobApplyService.Add(user.Nid, id);
+                    if (res)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Application submitted" });
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                    }
+                }
+
+            }
+
+
+        }
 
 
     }

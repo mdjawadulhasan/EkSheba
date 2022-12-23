@@ -18,7 +18,9 @@ namespace DAL.EF
         public Nullable<int> JAp_FK_NID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string ApplicantName { get; set; }
+        public Nullable<int> JAp_FK_JId { get; set; }
     
         public virtual UsersDetail UsersDetail { get; set; }
+        public virtual JobCircular JobCircular { get; set; }
     }
 }

@@ -14,6 +14,12 @@ namespace DAL.EF
     
     public partial class JobCircular
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public JobCircular()
+        {
+            this.JobApplies = new HashSet<JobApply>();
+        }
+    
         public int JCid { get; set; }
         public string Title { get; set; }
         public Nullable<int> Grade { get; set; }
@@ -21,5 +27,8 @@ namespace DAL.EF
         public string Minresult { get; set; }
         public string Department { get; set; }
         public Nullable<int> Agereq { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobApply> JobApplies { get; set; }
     }
 }

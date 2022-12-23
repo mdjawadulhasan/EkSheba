@@ -348,5 +348,36 @@ namespace EkSheba.Controllers
 
         }
 
+        //------------
+
+        [Route("api/jobapplications")]
+        [HttpGet]
+        public HttpResponseMessage ViewJobApplications()
+        {
+
+            var data = JobApplyService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+
+        [Route("api/jobapplication/{id}")]
+        [HttpGet]
+        public HttpResponseMessage VewJobApplication(int id)
+        {
+
+            var data = JobApplyService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+        [Route("api/jobapplication/delete/{id}")]
+        [HttpGet]
+        public HttpResponseMessage DeletejobApplications(int id)
+        {
+            var data = JobApplyService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
     }
 }

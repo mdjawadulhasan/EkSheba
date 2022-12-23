@@ -47,6 +47,7 @@
           <Property Name="JAp_FK_NID" Type="int" />
           <Property Name="Date" Type="datetime" />
           <Property Name="ApplicantName" Type="varchar" MaxLength="50" />
+          <Property Name="JAp_FK_JId" Type="int" />
         </EntityType>
         <EntityType Name="JobCircular">
           <Key>
@@ -193,6 +194,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobApply_JobCircular">
+          <End Role="JobCircular" Type="Self.JobCircular" Multiplicity="0..1" />
+          <End Role="JobApply" Type="Self.JobApply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobCircular">
+              <PropertyRef Name="JCid" />
+            </Principal>
+            <Dependent Role="JobApply">
+              <PropertyRef Name="JAp_FK_JId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobApply_UsersDetails">
           <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
           <End Role="JobApply" Type="Self.JobApply" Multiplicity="*" />
@@ -315,6 +328,10 @@
           <AssociationSet Name="FK_IncomeTax_UsersDetails" Association="Self.FK_IncomeTax_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
             <End Role="IncomeTax" EntitySet="IncomeTax" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApply_JobCircular" Association="Self.FK_JobApply_JobCircular">
+            <End Role="JobCircular" EntitySet="JobCircular" />
+            <End Role="JobApply" EntitySet="JobApply" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApply_UsersDetails" Association="Self.FK_JobApply_UsersDetails">
             <End Role="UsersDetails" EntitySet="UsersDetails" />
@@ -620,6 +637,10 @@
             <End Role="UsersDetail" EntitySet="UsersDetails" />
             <End Role="UserAcademicInfo" EntitySet="UserAcademicInfoes" />
           </AssociationSet>
+          <AssociationSet Name="FK_JobApply_JobCircular" Association="EkShebaModel.FK_JobApply_JobCircular">
+            <End Role="JobCircular" EntitySet="JobCirculars" />
+            <End Role="JobApply" EntitySet="JobApplies" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TaxPaymentHistory">
           <Key>
@@ -666,6 +687,8 @@
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="ApplicantName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UsersDetail" Relationship="EkShebaModel.FK_JobApply_UsersDetails" FromRole="JobApply" ToRole="UsersDetail" />
+          <Property Name="JAp_FK_JId" Type="Int32" />
+          <NavigationProperty Name="JobCircular" Relationship="EkShebaModel.FK_JobApply_JobCircular" FromRole="JobApply" ToRole="JobCircular" />
         </EntityType>
         <EntityType Name="JobCircular">
           <Key>
@@ -678,6 +701,7 @@
           <Property Name="Minresult" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Agereq" Type="Int32" />
+          <NavigationProperty Name="JobApplies" Relationship="EkShebaModel.FK_JobApply_JobCircular" FromRole="JobCircular" ToRole="JobApply" />
         </EntityType>
         <EntityType Name="UserAcademicInfo">
           <Key>
@@ -716,6 +740,18 @@
             </Principal>
             <Dependent Role="UserAcademicInfo">
               <PropertyRef Name="R_FK_NID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApply_JobCircular">
+          <End Type="EkShebaModel.JobCircular" Role="JobCircular" Multiplicity="0..1" />
+          <End Type="EkShebaModel.JobApply" Role="JobApply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobCircular">
+              <PropertyRef Name="JCid" />
+            </Principal>
+            <Dependent Role="JobApply">
+              <PropertyRef Name="JAp_FK_JId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -855,6 +891,7 @@
           <EntitySetMapping Name="JobApplies">
             <EntityTypeMapping TypeName="EkShebaModel.JobApply">
               <MappingFragment StoreEntitySet="JobApply">
+                <ScalarProperty Name="JAp_FK_JId" ColumnName="JAp_FK_JId" />
                 <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="JAp_FK_NID" ColumnName="JAp_FK_NID" />

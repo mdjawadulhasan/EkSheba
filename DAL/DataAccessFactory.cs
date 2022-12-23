@@ -83,5 +83,10 @@ namespace DAL
         }
 
 
+        public static IRepo<JobApply, int> JobApplyDataAccess()
+        {
+            return new JobApplicationsRepo();
+        }
+
     }
 }

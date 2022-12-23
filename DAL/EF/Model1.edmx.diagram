@@ -30,6 +30,7 @@
         <EntityTypeShape EntityType="EkShebaModel.UserAcademicInfo" Width="1.5" PointX="5.25" PointY="23.5" />
         <AssociationConnector Association="EkShebaModel.FK_JobApply_UsersDetails" />
         <AssociationConnector Association="EkShebaModel.FK_UserAcademicInfo_UsersDetails" />
+        <AssociationConnector Association="EkShebaModel.FK_JobApply_JobCircular" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
