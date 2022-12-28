@@ -146,7 +146,6 @@ namespace EkSheba.Controllers
 
 
             var ExistsApp = PassportAppService.GetbyFk(user.Nid);
-            //Need Update here. See whearher it is active or not.
             int balance = AccountService.CurentBalance(user.Nid);
 
             if (ExistsApp != null)
@@ -227,8 +226,6 @@ namespace EkSheba.Controllers
             var r = Request.Headers.Authorization;
             string token = r.ToString();
             var user = AuthService.GetCurrentUser(token);
-
-
             bool resp = FiscalYIncomeService.Update(dto);
 
             if (!resp)

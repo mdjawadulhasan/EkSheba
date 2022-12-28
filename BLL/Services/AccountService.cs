@@ -115,13 +115,13 @@ namespace BLL.Services
 
             if (type == 1)
             {
-                balance = balance - 10000;
+                balance = balance - 1000;
             }else if (type == 2)
             {
-                balance = balance -70000;
+                balance = balance -7000;
             }else if (type == 3)
             {
-                balance = balance - 50000;
+                balance = balance - 5000;
             }
 
             acc.Balance = balance;
