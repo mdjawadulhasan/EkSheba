@@ -36,6 +36,17 @@ namespace BLL.Services
             return user;
         }
 
+
+
+        public static LoginDTO Getusername(string uname)
+        {
+            var data = DataAccessFactory.LoginDataAccess().Get(uname);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, LoginDTO>());
+            var mapper = new Mapper(config);
+            var user = mapper.Map<LoginDTO>(data);
+            return user;
+        }
+
         public static bool Add(LoginDTO dto)
         {
 

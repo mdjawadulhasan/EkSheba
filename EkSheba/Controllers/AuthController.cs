@@ -42,10 +42,19 @@ namespace EkSheba.Controllers
         {
             if (ModelState.IsValid)
             {
-                var resp = LoginService.Add(user);
-                if (resp != false)
+                var value= LoginService.Getusername(user.Uname);
+                if (value != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "UserName Already Exists"});
+                }
+
+                else
+                {
+                    var resp = LoginService.Add(user);
+                    if (resp != false)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Registered", data = resp });
+                    }
                 }
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
