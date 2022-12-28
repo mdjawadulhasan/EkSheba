@@ -31,7 +31,10 @@ namespace BLL.Services
             return p;
         }
 
-
+        public static void Delete(int id)
+        {
+            DataAccessFactory.PassportapplicationDataAccess().Delete(id);
+        }
         public static bool Add(int id, int type)
         {
 

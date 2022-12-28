@@ -28,6 +28,7 @@ namespace BLL.Services
         {
 
             var req = DataAccessFactory.PassportapplicationDataAccess().Get(id);
+            PassportAppService.Delete(id);
             int type = (int)req.Type;
             int userid = (int)req.PA_FK_NID;
 
@@ -53,11 +54,11 @@ namespace BLL.Services
 
         }
 
-        public static bool BlockPassport(int id)
+        public static bool ChangeStatus(int id,int status)
         {
 
             var edata = DataAccessFactory.PassportDataAccess().Get(id);
-            edata.Status = 2;
+            edata.Status = status;
             bool b = DataAccessFactory.PassportDataAccess().Update(edata);
             return b;
 
