@@ -16,25 +16,7 @@ namespace EkSheba.Controllers
     public class UserController : ApiController
     {
 
-        [Route("api/login/update")]
-        [HttpPost]
-        public HttpResponseMessage Update(LoginDTO user)
-        {
-            if (ModelState.IsValid)
-            {
-                var resp = LoginService.Update(user);
-                if (resp != false)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Updated", data = resp });
-                }
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
 
-        }
 
         [Route("api/user/{id}")]
         [HttpGet]
@@ -100,15 +82,24 @@ namespace EkSheba.Controllers
             var r = Request.Headers.Authorization;
             string token = r.ToString();
             var data = AuthService.GetCurrentUser(token);
-            var resp = AccountService.Add(data.Nid);
 
-            if (resp != false)
+            var isexists = AccountService.GetbyFk(data.Nid);
+            if (isexists == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Inserted", data = resp });
+                var resp = AccountService.Add(data.Nid);
+                if (resp != false)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Requested" });
+                }
             }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Already Requested" });
+            }
+
+
             return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
-
 
 
 
@@ -130,6 +121,7 @@ namespace EkSheba.Controllers
                     var resp = AccountService.Recharge(data.Nid, amount);
                     if (resp != false)
                     {
+                        RechargeTokenService.UpdateToken(dto);
                         return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Balance updated", data = resp });
                     }
                     return Request.CreateResponse(HttpStatusCode.InternalServerError);
@@ -262,7 +254,7 @@ namespace EkSheba.Controllers
         }
 
 
-       
+
         [Route("api/users/Tax/PayTax/")]
         [HttpPost]
         public HttpResponseMessage PayTax(TaxDTO dto)
@@ -293,11 +285,11 @@ namespace EkSheba.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient balance ! Please Recharge" });
             }
-    
+
         }
 
 
-        
+
         [Route("api/user/academicinfo")]
         [HttpGet]
         public HttpResponseMessage Viewacademic()
@@ -324,7 +316,7 @@ namespace EkSheba.Controllers
             var user = AuthService.GetCurrentUser(token);
 
 
-            var ExistsApp = JobApplyService.IsExistsApplication(id,user.Nid);
+            var ExistsApp = JobApplyService.IsExistsApplication(id, user.Nid);
             int balance = AccountService.CurentBalance(user.Nid);
 
             if (ExistsApp != null)
@@ -333,13 +325,13 @@ namespace EkSheba.Controllers
             }
             else
             {
-                if (balance<500)
+                if (balance < 500)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new { msg = "Insufficient Balance" });
                 }
                 else
                 {
-                    AccountService.ChargeAmount(user.Nid,500);
+                    AccountService.ChargeAmount(user.Nid, 500);
                     bool res = JobApplyService.Add(user.Nid, id);
                     if (res)
                     {

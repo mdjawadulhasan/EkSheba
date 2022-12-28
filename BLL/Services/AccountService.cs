@@ -32,6 +32,16 @@ namespace BLL.Services
             return acc;
         }
 
+
+        public static AccountDTO GetbyFk(int id)
+        {
+            var data = DataAccessFactory.AccountDataAccess().GetbyFK(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Account, AccountDTO>());
+            var mapper = new Mapper(config);
+            var acc = mapper.Map<AccountDTO>(data);
+            return acc;
+        }
+
         public static bool Add(int id)
         {
 

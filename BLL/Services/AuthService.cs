@@ -43,6 +43,12 @@ namespace BLL.Services
         {
             var tk = DataAccessFactory.TokenDataAccess().Get(token);
             var CurrentUser = GetCurrentUser(token);
+            string status = "2";
+            if (CurrentUser != null)
+            {
+                status = CurrentUser.Status;
+            }
+
             if (tk != null)
             {
                 DateTime dt1 = (DateTime)tk.ExpirationTime;
@@ -51,7 +57,7 @@ namespace BLL.Services
                 var userlog = DataAccessFactory.LoginDataAccess().Get(tk.Username);
                 if (utype == 2)
                 {
-                    if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type && !CurrentUser.Status.Equals(2))
+                    if (DateTime.Compare(crnt, dt1) < 0 && utype == userlog.Type && !status.Equals(2))
                     {
                         return true;
                     }

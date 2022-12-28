@@ -32,9 +32,7 @@ namespace BLL.Services
             if (token != null)
             {
                 if (token.Status == 0)
-                {
-                    token.Status = 1;
-                    DataAccessFactory.RechargeTokenDataAccess().Update(token);
+                {                
                     return token.Amount;
                 }
                 return 0;
@@ -42,6 +40,19 @@ namespace BLL.Services
 
             return 0;
         }
+
+        public static void UpdateToken(RechargeTokenDTO dto)
+        {
+            var token = DataAccessFactory.RechargeTokenDataAccess().Get(dto.Token);
+
+            token.Status = 1;
+            DataAccessFactory.RechargeTokenDataAccess().Update(token);
+
+
+        }
+
+
+
 
 
     }
