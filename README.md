@@ -133,15 +133,4 @@ EkSheba is a comprehensive e-government portal that brings multiple public servi
    ```
 5. Build and run the application
 
-## Future Enhancements
-- Mobile application integration
-- SMS notification system
-- Digital signature implementation
-- Additional government services integration
-- Enhanced reporting and analytics
 
-## Contributors
-- MD. Jawadul Hasan
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
