@@ -1,108 +1,147 @@
+# EkSheba - Integrated E-Government Services Platform
 
-# EkSheba
+EkSheba is a comprehensive e-government portal that brings multiple public services onto a single platform, including banking, passport applications, income tax management, and job applications. The system is designed to provide Bangladeshi citizens with convenient access to essential government services through a unified interface.
 
-## Auth Controller 
-1. User Register 
-[POST] api/login/add
-⦁Check if username is used or not
+## Features
 
-2. Login 
-[POST] api/login/
+### User Services
+- **Authentication System**
+  - User registration with username validation
+  - Secure login with token-based authentication (15-minute expiration)
+  - User blocking functionality for security purposes
 
-⦁Expiration Time checked (15 minutes given)
-if user is blocked , then cant login to the system.
+- **Banking Services**
+  - Account creation request system
+  - Account recharge using scratchcards
+  - Transaction history tracking
+  - Balance management
 
+- **Passport Services**
+  - Application submission for different passport types
+  - Automatic fee calculation and balance deduction
+  - Application status tracking
 
-## User Controller 
-1.	User Details Add 
-[POST] api/users/add
+- **Tax Management**
+  - Income tax calculation based on Bangladesh tax regulations
+  - Tax payment processing with balance verification
+  - Payment history tracking
+  - Current year tax data updates
 
+- **Employment Services**
+  - Access to job circulars
+  - Online job application submission
+  - Application fee processing
+  - Application status tracking
 
-2. User Details Update 
-[Post]  api/users/update
+- **Educational Records**
+  - View academic results updated by Education Admin
 
-3. Bank Account Create Request 
-[Post] api/users/bank/reqaccount
-⦁	Check if there already pending request
+### Administration
+- **User Management**
+  - View all users and their details
+  - Activate/block user accounts
+  - Delete user accounts
 
-4. Account Recharge with Scratchcards 
-[Post] api/users/bank/Recharge
+- **Banking Administration**
+  - View all bank account requests
+  - Accept/reject account requests
+  - Block/activate accounts
+  - Generate recharge scratchcards with unique tokens
 
-#### 	Pre condition :
+- **Passport Administration**
+  - View all passport applications
+  - Accept passport applications
+  - Block/activate passports
 
-⦁ Account has to be activated by Admin
+- **Job Application Management**
+  - Create, update, and delete job circulars
+  - Manage job applications
 
-⦁ Scratchcard used by this user will be invalid for further use.
+- **Academic Records Management**
+  - CRUD operations for user academic information
 
-⦁	Transaction history table will be updated with this new transactions
+## Technical Architecture
 
-5. Passport Apply 
-[Post] api/users/passport/apply/type  
-#### 	Pre conditions :
-⦁ Sufficient balance with active account
+### Backend
+- **Framework**: ASP.NET Core Web API
+- **Database**: Microsoft SQL Server
+- **ORM**: Entity Framework Core
+- **Authentication**: JWT (JSON Web Tokens)
 
-⦁ Check if already request exists
+### API Endpoints
 
-⦁Balance will updated according to the passport type
+#### Auth Controller
+- `POST api/login/add` - User Registration
+- `POST api/login/` - User Login
 
-6. Add Income Tax 
-[Post] api/users/Tax/addincome 
+#### User Controller
+- `POST api/users/add` - Add User Details
+- `POST api/users/update` - Update User Details
+- `POST api/users/bank/reqaccount` - Request Bank Account
+- `POST api/users/bank/Recharge` - Recharge Account
+- `POST api/users/passport/apply/type` - Apply for Passport
+- `POST api/users/Tax/addincome` - Add Income Tax
+- `POST api/users/Tax/updateincome` - Update Income Tax
+- `POST api/users/Tax/PayTax` - Pay Tax
+- `GET api/user/academicinfo` - Get Academic Info
+- `GET api/jobapplication/apply/{id}` - Apply for Job
 
-⦁	Tax will calculated based on BD tax calculation algorithm and create a row in tax table with the taxable amount
+#### Admin Controller
+- `GET api/login/users` - View All Users
+- `GET api/login/delete/{id}` - Delete User
+- `GET api/login/user/{id}` - View Specific User
+- `GET api/users` - View All User Details
+- `POST api/user/active/{id}` - Activate User
+- `POST api/user/block/{id}` - Block User
+- `GET api/admin/BankAccount/accounts` - View Bank Accounts
+- `GET api/admin/BankAccount/AcceptAccount/{id}` - Accept Account
+- `GET api/admin/BankAccount/BlockAccount/{id}` - Block Account
+- `GET api/admin/BankAccount/delete/{id}` - Delete Account
+- `GET api/admin/BankAccount/genratetoken` - Generate Scratchcards
+- `GET api/admin/passport/applications` - View Passport Applications
+- `GET api/admin/passports` - View Passports
+- `GET api/admin/passport/Accept/{id}` - Accept Passport
+- `GET api/admin/passport/Block/{id}` - Block Passport
+- `GET api/admin/passport/Active/{id}` - Activate Passport
 
-⦁ Check if already exists or not
+## Business Rules
+- Account must be activated by admin before use
+- Scratchcards become invalid after first use
+- Passport applications require sufficient account balance
+- Income tax updates are only allowed for current year data
+- Job applications check for duplicate applications and sufficient balance
+- Each transaction updates the balance and transaction history
 
-	
-7.	Update Income Tax 
+## Installation and Setup
 
-[Post] api/users/Tax/updateincome
-- Can only update current year data 
+### Prerequisites
+- Visual Studio 2019 or later
+- .NET Core 5.0 SDK or later
+- Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
 
-8.	Pay Tax 
+### Setup Instructions
+1. Clone the repository
+   ```
+   git clone https://github.com/mdjawadulhasan/EkSheba.git
+   ```
+2. Open the solution file in Visual Studio
+3. Update the connection string in `appsettings.json` with your SQL Server details
+4. Run the following commands in Package Manager Console to set up the database:
+   ```
+   update-database
+   ```
+5. Build and run the application
 
-[Post] api/users/Tax/PayTax
+## Future Enhancements
+- Mobile application integration
+- SMS notification system
+- Digital signature implementation
+- Additional government services integration
+- Enhanced reporting and analytics
 
-⦁	Check if account balance > desirable paid amount
-⦁	Tax Paying history will stored inside another table
-⦁	Account Balance will be updated
+## Contributors
+- MD. Jawadul Hasan
 
-9. User Academic Info 
-[Get] api/user/academicinfo 
-
-⦁	See Academic results that are updated by Education Admin
-
-10. Job Application
- [Get] api/jobapplication/applv/{ id} 
-
-⦁	Check if already application exists [job id & user id checked]
-
-⦁	Check if sufficient(500) balance is available
-
-⦁	Account Balance will be updated
-
-## Admin Controller : 
-1.	See All users [GET] api/login/users 
-2.	Delete Users [GET] api/login/delete/{id} 
-3.	See Specific User [GET] api/login/user/{id} 
-4.	See All users Details [GET] api/users 
-5.	Active Users [POST] api/user/active/fidl 
-6.	Block User [POST] api/user/block/{id} 
-7.	View Bank Account [GET] api/admin/BankAccount/accounts 
-8.	Accept Bank account [GET] api/admin/BankAccount/AcceptAccount/{id} 
-9.	Block Bank Account [GET] api/admin/BankAccount/BlockAccount/lidl  10.Delete Bank Account [GET] api/admin/BankAccount/delete/{id}
-10. Generate recharge scratchcard [GET] api/admin/BankAccount/genratetoken - 10 scratchcard will generate with unique token worth 5000 taka on each 
-
-11. View Passport Applications [GET] apitadmmipassporttapplications  13.View Passports [GET] api/admin/passports 
-
-12. Accept Passport Application request [GET] api/admin/passport/Accept/{id} 
-
-13. Block Passport [GET] api/admin/passport/Block/fidl  
-
-14. Active Passport [GET] api/admin/passport/Active/fidl
-
-15. CRUD User Acadmic Info
-
-16. CRUD Job application
-
-17. CRUD Job Circular
-
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
